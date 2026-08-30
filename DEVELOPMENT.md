@@ -50,6 +50,25 @@ cliente en paralelo a la implementación, no esperan a terminarla.
 
 `npm run dev` / `npm run build` / `npx astro check` ya funcionan (ver `package.json`).
 
+## Ramas: `main` vs. `impecable-version`
+
+Desde el 30/08/2026 el repo tiene dos ramas con el mismo contenido funcional pero visualmente
+distinto, para poder comparar y elegir:
+
+- **`main`** — el baseline: todo lo de "Estado actual del proyecto" arriba, implementado spec por
+  spec, sin ninguna pasada de calidad visual dedicada.
+- **`impecable-version`** — el mismo sitio pasado por el plugin [Impeccable](https://impeccable.style/)
+  (`pbakaus/impeccable`), instalado y documentado en esta rama (`PRODUCT.md`, `DESIGN.md`,
+  `.impeccable/design.json`). El rework parte siempre de `docs/00-constitution.md` y
+  `docs/brand/brand-guide.md` como reglas no negociables — Impeccable pule dentro de esas reglas
+  (contraste, performance, consistencia de tokens, accesibilidad, tipografía/espaciado), no las
+  reemplaza. No toca contenido, catálogo, ni las specs — solo la capa visual/de implementación.
+
+**Cuándo decidir:** una vez que `impecable-version` esté terminada (auditoría + polish aplicados),
+comparar ambas ramas corriendo cada una (`git checkout main` / `git checkout impecable-version` +
+`npm run dev`) y quedarse con una — la otra se puede borrar o dejar como referencia. Ninguna de las
+dos se pushea a ningún remoto hasta esa decisión (ver Apéndice de abajo, todavía no ejecutado).
+
 ## Apéndice — Setup guiado de cuenta separada (GitHub + Vercel + MCP)
 
 No ejecutar esto todavía — son pasos interactivos (requieren login) para cuando el cliente esté listo
