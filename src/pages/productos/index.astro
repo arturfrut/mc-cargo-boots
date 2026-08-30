@@ -1,0 +1,137 @@
+---
+// docs/specs/005-productos-listado.md
+import Layout from "../../layouts/Layout.astro";
+import catalogo from "../../../docs/catalog/catalogo.json";
+
+// Agrupado por línea, en el mismo orden que orden_catalogo (el catálogo ya
+// viene agrupado por línea en ese orden: Ultra Light, Classic, Núcleo, F4).
+const lineas = new Map<string, typeof catalogo.modelos>();
+for (const modelo of catalogo.modelos) {
+  const grupo = lineas.get(modelo.linea) ?? [];
+  grupo.push(modelo);
+  lineas.set(modelo.linea, grupo);
+}
+
+const TIPO_AJUSTE_LABEL: Record<string, string> = {
+  stock: "Stock",
+  "semi-custom": "Semi-custom",
+};
+---
+
+<Layout title="Productos" description="Catálogo completo de botas MC Cargo Boots para patín carrera.">
+  <section class="listado">
+    <div class="listado-inner">
+      <h1>Productos</h1>
+      <p class="intro">Talles 30 al 47. Personalización de ajuste y colores según el modelo.</p>
+
+      {
+        Array.from(lineas.entries()).map(([linea, modelos]) => (
+          <div class="grupo">
+            <h2>{linea}</h2>
+            <div class="grid">
+              {modelos.map((modelo) => (
+                <a class="card" href={`/productos/${modelo.id}`}>
+                  <div class="card-media">
+                    {/*
+                      Placeholder: fotos reales pendientes (mc-cargo-imagenes.zip
+                      no está en el repo — ver "Abierto/pendiente" de la spec).
+                    */}
+                    <span>Foto pendiente</span>
+                  </div>
+                  <p class="card-gama">{modelo.gama}</p>
+                  <h3>{modelo.nombre}</h3>
+                  <span class="card-ajuste">{TIPO_AJUSTE_LABEL[modelo.tipo_ajuste] ?? modelo.tipo_ajuste}</span>
+                </a>
+              ))}
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .listado {
+    padding: 3.5rem 1.25rem 5rem;
+  }
+
+  .listado-inner {
+    max-width: 75rem;
+    margin: 0 auto;
+  }
+
+  .intro {
+    margin-top: 0.75rem;
+    color: var(--color-text-secondary);
+  }
+
+  .grupo {
+    margin-top: 3rem;
+  }
+
+  .grupo h2 {
+    font-size: 1.15rem;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+  }
+
+  .card {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: var(--color-text-primary);
+    border: 1px solid rgba(0, 160, 227, 0.35); /* divisor turquesa fino, acento no relleno */
+    border-radius: 0.5rem;
+    padding: 1.25rem;
+  }
+
+  .card-media {
+    aspect-ratio: 4 / 3;
+    border: 1px dashed rgba(176, 176, 176, 0.4);
+    border-radius: 0.35rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #1a1a1a;
+  }
+
+  .card-media span {
+    font-size: 0.75rem;
+    color: var(--color-text-secondary);
+  }
+
+  .card-gama {
+    margin: 1rem 0 0;
+    font-family: var(--font-body);
+    font-weight: 500; /* Poppins Medium */
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--color-text-secondary);
+  }
+
+  .card h3 {
+    margin: 0.35rem 0 0;
+    font-family: var(--font-body);
+    font-weight: 600; /* Poppins SemiBold */
+    font-size: 1.1rem;
+  }
+
+  .card-ajuste {
+    margin-top: 0.75rem;
+    align-self: flex-start;
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 0.7rem;
+    color: var(--color-accent);
+    border: 1px solid var(--color-accent);
+    border-radius: 999px;
+    padding: 0.2rem 0.65rem;
+  }
+</style>

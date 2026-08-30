@@ -1,0 +1,180 @@
+---
+// Selector de región/idioma. La UI/estructura es de 001-layout-shell; la
+// lógica de resolución de región (localStorage > hint de geo-IP > default),
+// el redirect a /en y la reescritura de los CTAs de WhatsApp son de
+// docs/specs/010-i18n-region.md — ver src/lib/region.ts para el detalle.
+// Server-side no se puede saber la región real (sitio 100% estático, sin
+// SSR — ver ADR 0001), así que el markup se renderiza con "Global" como
+// placeholder visual y el script de abajo lo corrige apenas carga la página.
+import { REGION_OPTIONS } from "../lib/constants";
+---
+
+<div class="region-selector">
+  <button
+    type="button"
+    class="region-trigger"
+    aria-haspopup="listbox"
+    aria-expanded="false"
+    id="region-trigger"
+  >
+    <span class="region-trigger-icon" aria-hidden="true">🌐</span>
+    <span class="region-trigger-label">Global</span>
+  </button>
+  <ul class="region-list" role="listbox" id="region-list" hidden>
+    {
+      REGION_OPTIONS.map((option) => (
+        <li role="option" aria-selected="false">
+          <button type="button" class="region-option" data-region={option.code}>
+            <span aria-hidden="true">{option.flag}</span>
+            {option.label}
+          </button>
+        </li>
+      ))
+    }
+  </ul>
+</div>
+
+<style>
+  .region-selector {
+    position: relative;
+  }
+
+  .region-trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: transparent;
+    border: 1px solid var(--color-text-secondary);
+    color: var(--color-text-primary);
+    border-radius: 999px;
+    padding: 0.35rem 0.75rem;
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    cursor: pointer;
+  }
+
+  .region-trigger:hover,
+  .region-trigger:focus-visible {
+    border-color: var(--color-accent);
+  }
+
+  .region-list {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 0.5rem);
+    margin: 0;
+    padding: 0.35rem;
+    list-style: none;
+    background: var(--color-bg-primary);
+    border: 1px solid var(--color-text-secondary);
+    border-radius: 0.5rem;
+    min-width: 9rem;
+    z-index: 20;
+  }
+
+  .region-option {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+    background: transparent;
+    border: none;
+    color: var(--color-text-primary);
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    padding: 0.4rem 0.5rem;
+    border-radius: 0.35rem;
+    cursor: pointer;
+    text-align: left;
+  }
+
+  .region-option:hover,
+  .region-option:focus-visible {
+    background: rgba(0, 160, 227, 0.15);
+  }
+</style>
+
+<script>
+  import { REGION_OPTIONS, type Region } from "../lib/constants";
+  import { pathForRegion, resolveRegion, storeRegion, whatsappHrefForRegion, type Locale } from "../lib/region";
+
+  const trigger = document.getElementById("region-trigger");
+  const list = document.getElementById("region-list");
+  const triggerIcon = trigger?.querySelector<HTMLElement>(".region-trigger-icon");
+  const triggerLabel = trigger?.querySelector<HTMLElement>(".region-trigger-label");
+
+  function currentLocale(): Locale {
+    const value = document.documentElement.dataset.locale;
+    return value === "en" ? "en" : "es";
+  }
+
+  // Reescribe todos los CTAs de WhatsApp de la página (header, footer,
+  // hero, contacto, ficha de producto — cualquiera marcado con
+  // data-whatsapp-msg) agregando el sufijo de región resuelto client-side.
+  // docs/specs/010-i18n-region.md punto 6.
+  function applyRegionToWhatsappLinks(region: Region) {
+    const locale = currentLocale();
+    document.querySelectorAll<HTMLAnchorElement>("[data-whatsapp-msg]").forEach((link) => {
+      const baseMessage = link.dataset.whatsappMsg;
+      if (!baseMessage) return;
+      link.href = whatsappHrefForRegion(baseMessage, locale, region);
+    });
+  }
+
+  function syncTriggerLabel(region: Region) {
+    const option = REGION_OPTIONS.find((opt) => opt.code === region);
+    if (option) {
+      if (triggerIcon) triggerIcon.textContent = option.flag;
+      if (triggerLabel) triggerLabel.textContent = option.label;
+    }
+    document.querySelectorAll<HTMLLIElement>(".region-list li").forEach((li) => {
+      const btn = li.querySelector<HTMLButtonElement>(".region-option");
+      li.setAttribute("aria-selected", String(btn?.dataset.region === region));
+    });
+  }
+
+  function closeList() {
+    trigger?.setAttribute("aria-expanded", "false");
+    list?.setAttribute("hidden", "");
+  }
+
+  // Estado inicial: localStorage > hint de geo-IP (cookie del edge
+  // middleware, ver middleware.ts) > "GLOBAL" por defecto.
+  const initialRegion = resolveRegion();
+  syncTriggerLabel(initialRegion);
+  applyRegionToWhatsappLinks(initialRegion);
+
+  trigger?.addEventListener("click", () => {
+    const expanded = trigger.getAttribute("aria-expanded") === "true";
+    trigger.setAttribute("aria-expanded", String(!expanded));
+    list?.toggleAttribute("hidden", expanded);
+  });
+
+  document.querySelectorAll<HTMLButtonElement>(".region-option").forEach((option) => {
+    option.addEventListener("click", () => {
+      const region = option.dataset.region as Region | undefined;
+      if (!region) return;
+
+      storeRegion(region);
+      syncTriggerLabel(region);
+      applyRegionToWhatsappLinks(region);
+      closeList();
+
+      // Solo navega si el idioma que implica la región elegida es distinto
+      // del idioma de la página actual (AR/CO ⇄ Global = es ⇄ en). Si la
+      // ruta actual todavía no tiene traducción, pathForRegion cae al home
+      // de ese idioma en vez de a un 404 (ver src/lib/region.ts).
+      const destination = pathForRegion(window.location.pathname, region);
+      if (destination !== window.location.pathname) {
+        window.location.assign(destination);
+      }
+    });
+  });
+
+  document.addEventListener("click", (event) => {
+    if (!(event.target instanceof Node)) return;
+    if (!trigger?.contains(event.target) && !list?.contains(event.target)) {
+      closeList();
+    }
+  });
+</script>

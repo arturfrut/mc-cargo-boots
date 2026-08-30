@@ -1,0 +1,68 @@
+/* Variables y reset de marca — ver docs/brand/brand-guide.md */
+
+:root {
+  /* Color: docs/brand/brand-guide.md §2 */
+  --color-bg-primary: #111111; /* dominante: fondos */
+  --color-text-primary: #ffffff; /* textos principales */
+  --color-accent: #00a0e3; /* CTAs, íconos, divisores — máx. ~20% de superficie */
+  --color-text-secondary: #b0b0b0; /* textos secundarios, specs */
+
+  /* Tipografía: docs/brand/brand-guide.md §3 */
+  --font-h1: "Righteous", sans-serif; /* TODO TEMPORAL: reemplazar por Blippo Black licenciada */
+  --font-h2: "Rajdhani", sans-serif; /* weight 700 = "Black", Google Fonts no ofrece 900 */
+  --font-body: "Poppins", sans-serif; /* pesos autorizados: 400 / 500 / 600 */
+
+  --header-height: 4.5rem;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  font-family: var(--font-body);
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+}
+
+h1 {
+  font-family: var(--font-h1);
+  letter-spacing: 0.03em; /* tracking +20/+40 del manual */
+}
+
+h2 {
+  font-family: var(--font-h2);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+a {
+  color: inherit;
+}
+
+img,
+svg {
+  max-width: 100%;
+  display: block;
+}
+
+/* Utilidad compartida: nunca turquesa como fondo dominante (brand-guide §2) */
+.accent {
+  color: var(--color-accent);
+}

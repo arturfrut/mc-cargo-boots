@@ -1,0 +1,235 @@
+{
+  "meta": {
+    "fuente": "Catálogo Mc Cargo (PDF, 9 páginas, agosto 2025)",
+    "marca": "MC Cargo Boots",
+    "categoria": "Botas para patín carrera",
+    "redes_sociales": {
+      "facebook": "mccargoboots",
+      "instagram": "mccargoboots"
+    },
+    "notas_de_transcripcion": [
+      "Datos transcriptos literalmente del catálogo. Se respetó la redacción original en descripciones.",
+      "POSIBLE ERRATA en NÚCLEO: talles declarados 30 al 47, pero el anclaje 195mm figura 'del 35 al 38.5' (en los demás modelos con talle hasta 47 dice 'del 35 al 47'). Verificar con el cliente antes de publicar.",
+      "CLASSIC Semi Custom no declara talles propios; comparte materiales con Classic Stock (talles 32 al 47). Verificar con el cliente.",
+      "Las rutas de 'imagenes' corresponden al zip mc-cargo-imagenes.zip entregado junto a este archivo."
+    ]
+  },
+  "modelos": [
+    {
+      "id": "ultra-light-plus",
+      "nombre": "Ultra Light+",
+      "etiqueta_catalogo": "ULTRA LIGHT+ Semi Custom",
+      "linea": "Ultra Light",
+      "tipo_ajuste": "semi-custom",
+      "gama": "alta (tope de línea)",
+      "orden_catalogo": 1,
+      "specs": {
+        "suela": "Fibra de carbono (interior tejido biaxial), epoxy vacuum system, Ultra Light technology",
+        "capellada": "Microfibra",
+        "talles": { "desde": 30, "hasta": 47 },
+        "anclaje_mm": [
+          { "medida": 165, "talles": "30 al 34.5" },
+          { "medida": 195, "talles": "35 al 47" },
+          { "medida": "165 o 195", "talles": "34 al 36.5" }
+        ],
+        "colores": ["Personalizables"]
+      },
+      "descripcion": "Bota de alto rendimiento, ultra liviana, diseñada con innovadora estructura en la suela de carbono que mejora la rigidez y reduce el peso. Capellada con diseño limpio y moderno, reforzada en lugares estratégicamente ubicados que consiguen una mejor sensación en el ajuste. Logra, en su conjunto, optimizar el control, la estabilidad y el empuje.",
+      "destacados": [
+        "Única en el mercado con tecnología Ultra Light; destaca por su eficiencia dinámica",
+        "Incluye sistema semi-custom: adapta la horma a las características anatómicas del usuario mediante un análisis personalizado (medidas, fotos, calcificaciones, etc.)",
+        "Posibilidad de personalización de colores"
+      ],
+      "imagenes": [
+        { "archivo": "ultra-light-plus/lateral-hero.jpg", "rol": "principal", "descripcion": "Vista lateral (foto principal del catálogo)" },
+        { "archivo": "ultra-light-plus/par-angulado.jpg", "rol": "galeria", "descripcion": "Par en vista angulada sobre fondo gris" },
+        { "archivo": "ultra-light-plus/par-sobre-azul.jpg", "rol": "galeria", "descripcion": "Par apoyado sobre superficie azul" },
+        { "archivo": "ultra-light-plus/detalle-hebilla-cobre.jpg", "rol": "detalle", "descripcion": "Detalle de capellada y hebilla con acabado cobre" },
+        { "archivo": "ultra-light-plus/detalle-correas.jpg", "rol": "detalle", "descripcion": "Detalle superior de correas y hebillas" }
+      ]
+    },
+    {
+      "id": "ultra-light-stock",
+      "nombre": "Ultra Light Stock",
+      "etiqueta_catalogo": "ULTRA LIGHT STOCK",
+      "linea": "Ultra Light",
+      "tipo_ajuste": "stock",
+      "gama": "alta",
+      "orden_catalogo": 2,
+      "specs": {
+        "suela": "Fibra de carbono (interior tejido biaxial), epoxy vacuum system, Ultra Light technology",
+        "capellada": "Microfibra, acolchados TSPS, refuerzos termoplásticos TG1 ultra livianos, cierre final con hebilla",
+        "talles": { "desde": 30, "hasta": 47 },
+        "anclaje_mm": [
+          { "medida": 165, "talles": "30 al 34.5" },
+          { "medida": 195, "talles": "35 al 47" },
+          { "medida": "165 o 195", "talles": "34 al 36.5" }
+        ],
+        "colores": ["Negras con detalles cobre"]
+      },
+      "descripcion": "Bota ultra liviana de alta gama. Mediante estructuras en la suela de carbono, se logra alivianar y mejorar la rigidez. Con capellada de diseño y refuerzos ultra livianos. Este sistema logra mejor estabilidad, control y mayor transmisión de empuje.",
+      "destacados": [
+        "Destacada por ser la única bota con tecnología Ultra Light del mercado"
+      ],
+      "imagenes": [
+        { "archivo": "ultra-light-stock/par-angulado-1.jpg", "rol": "principal", "descripcion": "Par en vista angulada" },
+        { "archivo": "ultra-light-stock/par-angulado-2.jpg", "rol": "galeria", "descripcion": "Par en vista frontal/angulada" },
+        { "archivo": "ultra-light-stock/par-angulado-3.jpg", "rol": "galeria", "descripcion": "Par en vista trasera/angulada" },
+        { "archivo": "ultra-light-stock/detalle-talon-cobre.jpg", "rol": "detalle", "descripcion": "Detalle de talón en carbono con acabado cobre (origen 6000x4000)" }
+      ]
+    },
+    {
+      "id": "ultra-light-semicustom",
+      "nombre": "Ultra Light",
+      "etiqueta_catalogo": "ULTRA LIGHT Semi Custom",
+      "linea": "Ultra Light",
+      "tipo_ajuste": "semi-custom",
+      "gama": "alta",
+      "orden_catalogo": 3,
+      "specs": {
+        "suela": "Mismos materiales que Ultra Light Stock",
+        "capellada": "Mismos materiales que Ultra Light Stock",
+        "talles": { "desde": 30, "hasta": 47 },
+        "anclaje_mm": [
+          { "medida": 165, "talles": "30 al 34.5" },
+          { "medida": 195, "talles": "35 al 47" },
+          { "medida": "165 o 195", "talles": "34 al 36.5" }
+        ],
+        "colores": ["Personalizables"]
+      },
+      "descripcion": "Bota fabricada con los mismos materiales que el modelo Ultra Light Stock, pero con un ajuste personalizado gracias a nuestro sistema de fabricación semi-custom. A través de un formulario que recoge información detallada de los pies (medidas, fotos, calcificaciones óseas, etc.), modificamos la horma estándar para lograr un ajuste personalizado al máximo.",
+      "destacados": [
+        "Sistema de fabricación semi-custom",
+        "Posibilidad de personalización de colores"
+      ],
+      "imagenes": [
+        { "archivo": "ultra-light-semicustom/bota-detalle-cobre.jpg", "rol": "principal", "descripcion": "Bota con vivos cobre, toma vertical" },
+        { "archivo": "ultra-light-semicustom/bota-sobre-azul.jpg", "rol": "galeria", "descripcion": "Bota individual sobre superficie azul" },
+        { "archivo": "ultra-light-semicustom/par-blanco-rojo.jpg", "rol": "galeria", "descripcion": "Par personalizado blanco con vivos rojos (ejemplo de personalización de colores)" }
+      ]
+    },
+    {
+      "id": "classic-stock",
+      "nombre": "Classic Stock",
+      "etiqueta_catalogo": "CLASSIC STOCK",
+      "linea": "Classic",
+      "tipo_ajuste": "stock",
+      "gama": "alta",
+      "orden_catalogo": 4,
+      "specs": {
+        "suela": "Fibra de carbono (interior tejido biaxial), epoxy vacuum system",
+        "capellada": "Microfibra, acolchados TSPS, refuerzos termoplásticos TG2. Cierre final con hebilla",
+        "talles": { "desde": 32, "hasta": 47 },
+        "anclaje_mm": [
+          { "medida": 165, "talles": "30 al 34.5" },
+          { "medida": 195, "talles": "35 al 47" },
+          { "medida": "165 o 195", "talles": "34 al 36.5" }
+        ],
+        "colores": ["Negras con detalles charol / blanco fantasía"]
+      },
+      "descripcion": "Bota gama alta. Ajuste profesional. Ideal para patinadores top.",
+      "destacados": [],
+      "imagenes": [
+        { "archivo": "classic-stock/lateral-hero.jpg", "rol": "principal", "descripcion": "Vista lateral (foto principal del catálogo)" },
+        { "archivo": "classic-stock/par-angulado.jpg", "rol": "galeria", "descripcion": "Par en vista angulada" },
+        { "archivo": "classic-stock/par-angulado-2.jpg", "rol": "galeria", "descripcion": "Par en vista angulada, toma alternativa" },
+        { "archivo": "classic-stock/par-frontal.jpg", "rol": "galeria", "descripcion": "Par en vista frontal" },
+        { "archivo": "classic-stock/detalle-trasero-ps.jpg", "rol": "detalle", "descripcion": "Vista trasera con logo PS en blanco" }
+      ]
+    },
+    {
+      "id": "classic-semicustom",
+      "nombre": "Classic",
+      "etiqueta_catalogo": "CLASSIC Semi Custom",
+      "linea": "Classic",
+      "tipo_ajuste": "semi-custom",
+      "gama": "alta",
+      "orden_catalogo": 5,
+      "specs": {
+        "suela": "Mismos materiales que Classic Stock",
+        "capellada": "Mismos materiales que Classic Stock",
+        "talles": null,
+        "anclaje_mm": null,
+        "colores": ["Personalizables"]
+      },
+      "descripcion": "Bota fabricada con los mismos materiales que el modelo Classic Stock, pero con un ajuste personalizado gracias a nuestro sistema de fabricación semi-custom. A través de un formulario que recoge información detallada de los pies (medidas, fotos, calcificaciones óseas, etc.), modificamos la horma estándar para lograr un ajuste personalizado al máximo.",
+      "destacados": [
+        "Sistema de fabricación semi-custom",
+        "Posibilidad de personalización de colores"
+      ],
+      "imagenes": [
+        { "archivo": "classic-semicustom/lateral-vivos-celeste.jpg", "rol": "principal", "descripcion": "Vista lateral con vivos celestes" },
+        { "archivo": "classic-semicustom/par-vivos-violeta.jpg", "rol": "galeria", "descripcion": "Par personalizado con vivos violeta" },
+        { "archivo": "classic-semicustom/detalle-talon-toro.jpg", "rol": "detalle", "descripcion": "Detalle de talón cromado personalizado ('TORO')" }
+      ]
+    },
+    {
+      "id": "nucleo",
+      "nombre": "Núcleo",
+      "etiqueta_catalogo": "NÚCLEO",
+      "linea": "Núcleo",
+      "tipo_ajuste": "stock",
+      "gama": "media",
+      "orden_catalogo": 6,
+      "specs": {
+        "suela": "Fibra de carbono, resina epoxy compuesta, laminación en vacío",
+        "capellada": "PU, acolchados SPS, refuerzos termoplásticos TG3. Cierre final con hebilla",
+        "talles": { "desde": 30, "hasta": 47 },
+        "anclaje_mm": [
+          { "medida": 165, "talles": "30 al 34.5" },
+          { "medida": 195, "talles": "35 al 38.5", "nota": "POSIBLE ERRATA: verificar si corresponde '35 al 47' (los talles llegan al 47)" },
+          { "medida": "165 o 195", "talles": "34 al 36.5" }
+        ],
+        "colores": ["Negro"]
+      },
+      "descripcion": "Bota gama media. Ajuste para técnica alta. Ideal para patinadores en etapa experticia.",
+      "destacados": [],
+      "imagenes": [
+        { "archivo": "nucleo/lateral.jpg", "rol": "principal", "descripcion": "Vista lateral" },
+        { "archivo": "nucleo/par-angulado.jpg", "rol": "galeria", "descripcion": "Par en vista angulada" },
+        { "archivo": "nucleo/par-2.jpg", "rol": "galeria", "descripcion": "Par, toma alternativa" },
+        { "archivo": "nucleo/trasero-ps.jpg", "rol": "detalle", "descripcion": "Vista trasera con logo PS" }
+      ]
+    },
+    {
+      "id": "f4",
+      "nombre": "F4",
+      "etiqueta_catalogo": "F4",
+      "linea": "F4",
+      "tipo_ajuste": "stock",
+      "gama": "iniciación profesional",
+      "orden_catalogo": 7,
+      "specs": {
+        "suela": "Fibra de carbono, resinas reforzadas compuestas",
+        "capellada": "PU, acolchados SPS, refuerzos termoplásticos TG6. Cierre final con hebilla",
+        "talles": { "desde": 30, "hasta": 38.5 },
+        "anclaje_mm": [
+          { "medida": 165, "talles": "30 al 36" },
+          { "medida": 195, "talles": "36 al 38.5" },
+          { "medida": "165 o 195", "talles": "del 34 en adelante es posible elegir cualquiera de los dos anclajes" }
+        ],
+        "colores": ["Negro/blanco", "Rosa/blanco", "Azul/blanco"]
+      },
+      "descripcion": "Ideal como primera bota profesional de competición. Altura media a alta y excelente soporte de tobillo. Cumple con todas las cualidades técnicas necesarias para desarrollarse en el patín carrera, alta calidad en refuerzos internos.",
+      "destacados": [
+        "Primera bota profesional de competición",
+        "Tres colorways de fábrica"
+      ],
+      "imagenes": [
+        { "archivo": "f4/lateral.jpg", "rol": "principal", "descripcion": "Vista lateral" },
+        { "archivo": "f4/par-angulado.jpg", "rol": "galeria", "descripcion": "Par en vista angulada" },
+        { "archivo": "f4/par-rosa-blanco.jpg", "rol": "galeria", "descripcion": "Par colorway rosa/blanco" },
+        { "archivo": "f4/par-azul-blanco.jpg", "rol": "galeria", "descripcion": "Par colorway azul/blanco" },
+        { "archivo": "f4/trasero-negro-blanco.jpg", "rol": "galeria", "descripcion": "Vista trasera colorway negro/blanco" }
+      ]
+    }
+  ],
+  "glosario_tecnico": {
+    "epoxy_vacuum_system": "Sistema de laminación de fibra de carbono con resina epoxy al vacío",
+    "ultra_light_technology": "Tecnología propia de MC Cargo de estructuras en la suela de carbono para reducir peso y mejorar rigidez (única en el mercado según el catálogo)",
+    "semi_custom": "Sistema que modifica la horma estándar según formulario con medidas, fotos y calcificaciones óseas del usuario",
+    "anclaje": "Distancia entre agujeros de montaje del chasis, en milímetros (estándares 165mm y 195mm)",
+    "TSPS_SPS": "Tipos de acolchado interno de la capellada",
+    "TG1_TG2_TG3_TG6": "Grados de refuerzos termoplásticos de la capellada (TG1 = ultra livianos)"
+  }
+}

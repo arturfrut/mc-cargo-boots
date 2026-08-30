@@ -1,0 +1,130 @@
+---
+import {
+  CONTACT_EMAIL,
+  FACEBOOK_HANDLE,
+  INSTAGRAM_HANDLE,
+  WHATSAPP_GENERIC_MESSAGE,
+  whatsappHref,
+} from "../lib/constants";
+import { DEFAULT_LOCALE, NAV_ITEMS_BY_LOCALE, isLocale, navLabel, t } from "../i18n/ui";
+
+const locale = isLocale(Astro.currentLocale) ? Astro.currentLocale : DEFAULT_LOCALE;
+const navItems = NAV_ITEMS_BY_LOCALE[locale];
+const baseMessage = WHATSAPP_GENERIC_MESSAGE[locale];
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="site-footer-inner">
+    <div class="footer-brand">
+      <!-- Mismo placeholder de texto que el header — ver comentario en Header.astro -->
+      <span class="logo-word">MC <span class="accent">CARGO</span></span>
+      <span class="logo-sub">BOOTS</span>
+      <p class="tagline">{t(locale, "footer.tagline")}</p>
+    </div>
+
+    <nav class="footer-nav" aria-label="Navegación de pie de página">
+      <ul>
+        {
+          navItems.map((item) => (
+            <li>
+              <a href={locale === "en" ? `/en${item.href}` : item.href}>{navLabel(locale, item.key)}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="footer-contact">
+      <!-- WhatsApp y mail son mocks explícitos (docs/specs/008-contacto.md); IG/FB ya son reales -->
+      <a href={whatsappHref(baseMessage)} data-whatsapp-msg={baseMessage} target="_blank" rel="noopener noreferrer">WhatsApp</a>
+      <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
+      <a href={`https://instagram.com/${INSTAGRAM_HANDLE}`} target="_blank" rel="noopener noreferrer">
+        @{INSTAGRAM_HANDLE}
+      </a>
+      <a href={`https://facebook.com/${FACEBOOK_HANDLE}`} target="_blank" rel="noopener noreferrer">
+        Facebook
+      </a>
+    </div>
+  </div>
+
+  <p class="copyright">© {year} MC Cargo Boots.</p>
+</footer>
+
+<style>
+  .site-footer {
+    border-top: 1px solid rgba(176, 176, 176, 0.2);
+    padding: 2.5rem 1.25rem 1.5rem;
+  }
+
+  .site-footer-inner {
+    max-width: 75rem;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+
+  .logo-word {
+    font-family: var(--font-h1);
+    font-size: 1.1rem;
+    letter-spacing: 0.03em;
+  }
+
+  .logo-sub {
+    display: block;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    color: var(--color-text-secondary);
+  }
+
+  .tagline {
+    font-family: var(--font-h2);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    color: var(--color-text-secondary);
+    margin: 0.75rem 0 0;
+  }
+
+  .footer-nav ul,
+  .footer-contact {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .footer-nav a,
+  .footer-contact a {
+    font-size: 0.9rem;
+    text-decoration: none;
+    color: var(--color-text-secondary);
+  }
+
+  .footer-nav a:hover,
+  .footer-contact a:hover {
+    color: var(--color-accent);
+  }
+
+  .copyright {
+    max-width: 75rem;
+    margin: 2rem auto 0;
+    padding-top: 1.25rem;
+    border-top: 1px solid rgba(176, 176, 176, 0.1);
+    font-size: 0.75rem;
+    color: var(--color-text-secondary);
+  }
+
+  @media (max-width: 48rem) {
+    .site-footer-inner {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

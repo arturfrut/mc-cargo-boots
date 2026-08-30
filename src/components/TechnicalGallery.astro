@@ -1,0 +1,128 @@
+---
+// docs/specs/009-galeria-tecnica.md
+// Bloqueada de contenido real (ver "Abierto/pendiente" de la spec): no hay
+// links de YouTube ni copy de "servicio técnico" en los documentos fuente
+// todavía. A diferencia de 006-producto-detalle.md, esta spec pide
+// explícitamente NO usar stock genérico acá ("sin stock genérico que
+// desentone") — se arma solo la estructura, con placeholders de texto.
+import catalogo from "../../docs/catalog/catalogo.json";
+
+const detalles = catalogo.modelos.flatMap((modelo) =>
+  modelo.imagenes
+    .filter((img) => img.rol === "detalle")
+    .map((img) => ({ modelo: modelo.nombre, descripcion: img.descripcion })),
+);
+---
+
+<section id="technical-gallery" class="gallery">
+  <div class="gallery-inner">
+    <h2>Technical Gallery</h2>
+    <p class="intro">
+      Detalle de construcción, materiales y proceso técnico detrás de cada bota.
+    </p>
+
+    <div class="carousel" role="group" aria-label="Fotos de detalle técnico (pendientes del cliente)">
+      {
+        detalles.map((item) => (
+          <figure class="carousel-item">
+            <span>{item.descripcion}</span>
+            <figcaption>{item.modelo}</figcaption>
+          </figure>
+        ))
+      }
+      <figure class="carousel-item carousel-item-video">
+        <span>Video técnico — link de YouTube pendiente</span>
+      </figure>
+    </div>
+
+    <div class="servicio">
+      <h3>Servicio técnico</h3>
+      <p>
+        Garantía y servicios de mantenimiento/ajuste sobre el calzado — alcance y condiciones
+        pendientes de definir con el cliente.
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .gallery {
+    padding: 4.5rem 1.25rem;
+    border-top: 1px solid rgba(176, 176, 176, 0.15);
+  }
+
+  .gallery-inner {
+    max-width: 60rem;
+    margin: 0 auto;
+  }
+
+  .intro {
+    margin-top: 0.75rem;
+    max-width: 36rem;
+    color: var(--color-text-secondary);
+  }
+
+  .carousel {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2.5rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 0.5rem;
+  }
+
+  .carousel-item {
+    flex: 0 0 min(14rem, 75vw);
+    aspect-ratio: 4 / 3;
+    margin: 0;
+    scroll-snap-align: start;
+    border: 1px dashed rgba(176, 176, 176, 0.4);
+    border-radius: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 1rem;
+    background: #1a1a1a;
+  }
+
+  .carousel-item span {
+    font-size: 0.8rem;
+    color: var(--color-text-secondary);
+  }
+
+  .carousel-item figcaption {
+    margin-top: 0.5rem;
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 0.7rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+
+  .carousel-item-video {
+    border-color: var(--color-accent);
+  }
+
+  .servicio {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(176, 176, 176, 0.15);
+    max-width: 36rem;
+  }
+
+  .servicio h3 {
+    font-family: var(--font-h2);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.95rem;
+    letter-spacing: 0.02em;
+  }
+
+  .servicio p {
+    margin-top: 0.75rem;
+    color: var(--color-text-secondary);
+  }
+</style>

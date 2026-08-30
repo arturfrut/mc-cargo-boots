@@ -1,0 +1,185 @@
+---
+// docs/specs/004-productos-home.md
+import { Image } from "astro:assets";
+import catalogo from "../../docs/catalog/catalogo.json";
+import { stockCreditLabel } from "../lib/constants";
+import girlsSemifinal from "../assets/stock/producto-girls-semifinal-43.jpg";
+import girls029 from "../assets/stock/producto-girls-029.jpg";
+import boysVictory from "../assets/stock/producto-boys-victory-71.jpg";
+
+// "Qué 3 modelos mostrar" queda pendiente de validar con el cliente (ver
+// "Abierto/pendiente" de la spec). Se usa la propuesta del propio spec: un
+// modelo representativo por gama en vez de 3 variantes de la misma línea.
+const DESTACADOS_IDS = ["ultra-light-plus", "classic-stock", "nucleo"];
+
+// Fotos de stock temporales (no son el producto real — el zip de fotos del
+// catálogo, mc-cargo-imagenes.zip, no está en el repo). Son fotos de
+// contexto (patín carrera), no del calzado; se etiquetan como tal en la UI
+// para no hacerlas pasar por fotos de producto. Créditos en
+// docs/credits/fotos-stock.md.
+const STOCK_BY_ID: Record<string, { img: ImageMetadata; credit: string }> = {
+  "ultra-light-plus": { img: girlsSemifinal, credit: "producto-girls-semifinal-43" },
+  "classic-stock": { img: girls029, credit: "producto-girls-029" },
+  nucleo: { img: boysVictory, credit: "producto-boys-victory-71" },
+};
+
+const destacados = DESTACADOS_IDS.map((id) => catalogo.modelos.find((m) => m.id === id)).filter(
+  (m): m is NonNullable<typeof m> => m !== undefined,
+);
+---
+
+<section id="productos" class="productos">
+  <div class="productos-inner">
+    <h2>Productos</h2>
+
+    <div class="grid">
+      {
+        destacados.map((modelo) => {
+          const stock = STOCK_BY_ID[modelo.id];
+          return (
+            <article class="card">
+              <div class="card-media">
+                {stock && (
+                  <>
+                    <Image
+                      src={stock.img}
+                      alt={`Foto de contexto de patín carrera (no es una foto del producto ${modelo.nombre})`}
+                      widths={[320, 480, 640]}
+                      sizes="(min-width: 48rem) 20rem, 90vw"
+                      quality={65}
+                    />
+                    <span class="card-media-badge">Foto de referencia — no es el producto</span>
+                  </>
+                )}
+              </div>
+              <p class="card-linea">{modelo.linea}</p>
+              <h3>{modelo.nombre}</h3>
+              <p class="card-desc">{modelo.descripcion}</p>
+              {stock && <p class="card-credit">{stockCreditLabel(stock.credit)}</p>}
+              <a class="card-cta" href="/productos">
+                Ver más
+              </a>
+            </article>
+          );
+        })
+      }
+    </div>
+
+    <a class="general-cta" href="/productos">Ver todos los modelos</a>
+  </div>
+</section>
+
+<style>
+  .productos {
+    padding: 4.5rem 1.25rem;
+    border-top: 1px solid rgba(176, 176, 176, 0.15);
+  }
+
+  .productos-inner {
+    max-width: 75rem;
+    margin: 0 auto;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .card {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(0, 160, 227, 0.35); /* divisor turquesa fino, acento no relleno */
+    border-radius: 0.5rem;
+    padding: 1.25rem;
+  }
+
+  .card-media {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    border-radius: 0.35rem;
+    overflow: hidden;
+    background: #1a1a1a;
+  }
+
+  .card-media :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .card-media-badge {
+    position: absolute;
+    left: 0.5rem;
+    bottom: 0.5rem;
+    font-family: var(--font-body);
+    font-size: 0.65rem;
+    color: var(--color-text-primary);
+    background: rgba(17, 17, 17, 0.75);
+    border-radius: 0.25rem;
+    padding: 0.2rem 0.45rem;
+  }
+
+  .card-linea {
+    margin: 1rem 0 0;
+    font-family: var(--font-body);
+    font-weight: 500; /* Poppins Medium */
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--color-text-secondary);
+  }
+
+  .card h3 {
+    margin: 0.35rem 0 0;
+    font-family: var(--font-body);
+    font-weight: 600; /* Poppins SemiBold */
+    font-size: 1.15rem;
+  }
+
+  .card-desc {
+    margin: 0.6rem 0 0;
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .card-credit {
+    margin: 0.5rem 0 0;
+    font-size: 0.65rem;
+    color: var(--color-text-secondary);
+  }
+
+  .card-cta {
+    margin-top: 1.25rem;
+    align-self: flex-start;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--color-accent);
+    text-decoration: none;
+    border-bottom: 1px solid var(--color-accent);
+  }
+
+  .general-cta {
+    display: inline-block;
+    margin-top: 2.5rem;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--color-bg-primary);
+    background: var(--color-accent);
+    text-decoration: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 999px;
+  }
+
+  .general-cta:hover,
+  .general-cta:focus-visible {
+    background: #33b5e8;
+  }
+</style>

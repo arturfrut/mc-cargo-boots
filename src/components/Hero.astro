@@ -1,0 +1,127 @@
+---
+// docs/specs/002-hero.md
+import { Image } from "astro:assets";
+import { WHATSAPP_GENERIC_MESSAGE, stockCreditLabel, whatsappHref } from "../lib/constants";
+import { DEFAULT_LOCALE, isLocale, t } from "../i18n/ui";
+import heroImg from "../assets/stock/hero-youth-olympics-buenosaires.jpg";
+
+const locale = isLocale(Astro.currentLocale) ? Astro.currentLocale : DEFAULT_LOCALE;
+const baseMessage = WHATSAPP_GENERIC_MESSAGE[locale];
+---
+
+<section class="hero">
+  <div class="hero-media">
+    <!--
+      Foto de stock temporal (no es de MC Cargo) — Juegos Olímpicos de la
+      Juventud 2018, Buenos Aires. La foto final del cliente sigue pendiente
+      (ver docs/specs/002-hero.md "Abierto/pendiente"; créditos completos en
+      docs/credits/fotos-stock.md).
+    -->
+    <Image
+      src={heroImg}
+      alt="Patinadores de carrera en competición, Juegos Olímpicos de la Juventud 2018 (Buenos Aires)"
+      widths={[640, 1024, 1600, 2400]}
+      sizes="100vw"
+      quality={70}
+      loading="eager"
+    />
+    <span class="hero-credit">{stockCreditLabel("hero-youth-olympics-buenosaires")}</span>
+  </div>
+
+  <div class="hero-content">
+    <h1>MC <span class="accent">CARGO</span> BOOTS</h1>
+    <h2>{t(locale, "hero.tagline")}</h2>
+    <p>{t(locale, "hero.copy")}</p>
+    <a
+      class="hero-cta"
+      href={whatsappHref(baseMessage)}
+      data-whatsapp-msg={baseMessage}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      {t(locale, "hero.cta")}
+    </a>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    min-height: min(42rem, 90vh);
+    overflow: hidden;
+  }
+
+  .hero-media {
+    position: absolute;
+    inset: 0;
+  }
+
+  .hero-media :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 30%;
+  }
+
+  .hero-media::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(0deg, rgba(17, 17, 17, 0.95) 0%, rgba(17, 17, 17, 0.35) 55%);
+  }
+
+  .hero-credit {
+    position: absolute;
+    right: 0.75rem;
+    bottom: 0.5rem;
+    z-index: 1;
+    font-family: var(--font-body);
+    font-size: 0.65rem;
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 75rem;
+    margin: 0 auto;
+    width: 100%;
+    padding: 3.5rem 1.25rem 4.5rem;
+  }
+
+  .hero-content h1 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+  }
+
+  .hero-content h2 {
+    margin-top: 0.75rem;
+    font-size: clamp(1rem, 2vw, 1.35rem);
+    color: var(--color-text-secondary);
+  }
+
+  .hero-content p {
+    max-width: 32rem;
+    margin: 1rem 0 0;
+    color: var(--color-text-secondary);
+  }
+
+  .hero-cta {
+    display: inline-block;
+    margin-top: 1.75rem;
+    background: var(--color-accent);
+    color: var(--color-bg-primary);
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    padding: 0.85rem 1.75rem;
+    border-radius: 999px;
+  }
+
+  .hero-cta:hover,
+  .hero-cta:focus-visible {
+    background: #33b5e8;
+  }
+</style>

@@ -1,0 +1,38 @@
+---
+// docs/specs/010-i18n-region.md
+//
+// Página placeholder para probar el ruteo /en/... y la resolución de región
+// end-to-end (ver src/lib/region.ts). Alcance de esta pasada: solo el
+// "chrome" (header/footer/nav, vía Layout) y el Hero están traducidos.
+// Nosotros/Productos/Contacto/Technical Gallery siguen en español — se
+// muestra un aviso explícito en vez de fingir que ya están traducidas.
+import Layout from "../../layouts/Layout.astro";
+import Hero from "../../components/Hero.astro";
+import Nosotros from "../../components/Nosotros.astro";
+import ProductosHome from "../../components/ProductosHome.astro";
+import Contacto from "../../components/Contacto.astro";
+import TechnicalGallery from "../../components/TechnicalGallery.astro";
+---
+
+<Layout title="Home">
+  <Hero />
+  <p class="translation-notice">
+    The sections below are still only available in Spanish — English content is pending
+    (docs/specs/010-i18n-region.md).
+  </p>
+  <Nosotros />
+  <ProductosHome />
+  <Contacto />
+  <TechnicalGallery />
+</Layout>
+
+<style>
+  .translation-notice {
+    max-width: 60rem;
+    margin: 0 auto;
+    padding: 1rem 1.25rem 0;
+    font-size: 0.8rem;
+    color: var(--color-text-secondary);
+    font-style: italic;
+  }
+</style>

@@ -1,0 +1,144 @@
+---
+// docs/specs/008-contacto.md
+// MOCK explícito de la spec: los 3 datos son de prueba, no reales de MC
+// Cargo. El Instagram acá es a propósito el handle mock (marketingkai.ok),
+// no el real (@mccargoboots, ya usado en Footer.astro) — así lo pide la
+// spec, para tener un trío de datos de prueba visualmente coherente.
+// Reemplazar los 3 antes de publicar (bloqueante, ver "Abierto/pendiente").
+import { CONTACT_EMAIL, WHATSAPP_GENERIC_MESSAGE, whatsappHref } from "../lib/constants";
+
+const MOCK_INSTAGRAM = "marketingkai.ok";
+// Página solo en español por ahora — ver docs/specs/010-i18n-region.md
+// (alcance de esta pasada: mecanismo + Hero, no todo el contenido).
+const baseMessage = WHATSAPP_GENERIC_MESSAGE.es;
+
+const canales = [
+  {
+    label: "WhatsApp",
+    value: "+54 9 11 0000-0000",
+    href: whatsappHref(baseMessage),
+    external: true,
+    icon: "whatsapp" as const,
+  },
+  {
+    label: "Instagram",
+    value: `@${MOCK_INSTAGRAM}`,
+    href: `https://instagram.com/${MOCK_INSTAGRAM}`,
+    external: true,
+    icon: "instagram" as const,
+  },
+  {
+    label: "Mail",
+    value: CONTACT_EMAIL,
+    href: `mailto:${CONTACT_EMAIL}`,
+    external: false,
+    icon: "mail" as const,
+  },
+];
+---
+
+<section id="contacto" class="contacto">
+  <div class="contacto-inner">
+    <h2>Contacto</h2>
+    <p class="nota">
+      Datos de prueba — se reemplazan por los canales reales de MC Cargo antes de publicar.
+    </p>
+
+    <ul class="canales">
+      {
+        canales.map((canal) => (
+          <li>
+            <a
+              href={canal.href}
+              data-whatsapp-msg={canal.icon === "whatsapp" ? baseMessage : undefined}
+              target={canal.external ? "_blank" : undefined}
+              rel={canal.external ? "noopener noreferrer" : undefined}
+            >
+              <svg class="canal-icon" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6">
+                {canal.icon === "whatsapp" && (
+                  <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.97L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.51 2 12.04 2Zm4.52 12.68c-.25.58-1.42 1.11-1.9 1.18-.49.07-.94.19-3.13-.65-2.65-1.05-4.34-3.6-4.46-3.77-.13-.16-1.06-1.41-1.06-2.69 0-1.28.67-1.9.9-2.16.23-.25.5-.31.66-.31h.47c.16 0 .36-.03.56.42.2.5.7 1.72.76 1.84.06.12.1.26.02.43-.08.16-.12.26-.24.4-.12.15-.26.32-.37.44-.13.12-.25.25-.11.5.15.25.65 1.06 1.39 1.72.95.84 1.75 1.11 2 1.23.25.12.39.1.53-.06.15-.16.63-.72.79-.96.16-.25.32-.2.55-.12.23.08 1.44.68 1.68.8.25.12.42.18.47.28.06.1.06.58-.14 1.15Z" />
+                )}
+                {canal.icon === "instagram" && (
+                  <>
+                    <rect x="3" y="3" width="18" height="18" rx="5" />
+                    <circle cx="12" cy="12" r="4.2" />
+                    <circle cx="17.2" cy="6.8" r="0.6" fill="currentColor" stroke="none" />
+                  </>
+                )}
+                {canal.icon === "mail" && (
+                  <>
+                    <rect x="3" y="5" width="18" height="14" rx="2" />
+                    <path d="m4 7 8 6 8-6" />
+                  </>
+                )}
+              </svg>
+              <span class="canal-label">{canal.label}</span>
+              <span class="canal-value">{canal.value}</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .contacto {
+    padding: 4.5rem 1.25rem;
+    border-top: 1px solid rgba(176, 176, 176, 0.15);
+  }
+
+  .contacto-inner {
+    max-width: 60rem;
+    margin: 0 auto;
+  }
+
+  .nota {
+    margin-top: 0.5rem;
+    font-size: 0.75rem;
+    color: var(--color-text-secondary);
+  }
+
+  .canales {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    gap: 1rem;
+    list-style: none;
+    margin: 2rem 0 0;
+    padding: 0;
+  }
+
+  .canales a {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    text-decoration: none;
+    border: 1px solid rgba(0, 160, 227, 0.35); /* divisor turquesa fino, acento no relleno */
+    border-radius: 0.5rem;
+    padding: 1.25rem;
+  }
+
+  .canales a:hover,
+  .canales a:focus-visible {
+    border-color: var(--color-accent);
+  }
+
+  .canal-icon {
+    color: var(--color-accent);
+  }
+
+  .canal-label {
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+
+  .canal-value {
+    font-family: var(--font-body);
+    font-weight: 600;
+    color: var(--color-text-primary);
+  }
+</style>

@@ -1,0 +1,399 @@
+---
+// docs/specs/006-producto-detalle.md
+import Layout from "../../layouts/Layout.astro";
+import catalogo from "../../../docs/catalog/catalogo.json";
+import {
+  FORMULARIO_HREF_BY_TIPO_AJUSTE,
+  whatsappProductHref,
+  whatsappProductMessage,
+} from "../../lib/constants";
+
+export function getStaticPaths() {
+  return catalogo.modelos.map((modelo) => ({
+    params: { slug: modelo.id },
+    props: { modelo },
+  }));
+}
+
+const { modelo } = Astro.props;
+
+const imagenPrincipal = modelo.imagenes.find((img) => img.rol === "principal");
+const imagenesSecundarias = modelo.imagenes.filter((img) => img.rol !== "principal");
+
+const TIPO_AJUSTE_LABEL: Record<string, string> = {
+  stock: "Stock",
+  "semi-custom": "Semi-custom",
+};
+
+// El catálogo ya distingue: "Personalizables" (semi-custom, paleta grande
+// pendiente de definir) vs. una lista fija de colorways reales de fábrica
+// (stock). Para "Personalizables" se arma una grilla placeholder de ~30
+// swatches genéricos, tal como pide la spec (ver "Abierto/pendiente").
+const esPaletaPersonalizable =
+  modelo.specs.colores.length === 1 && modelo.specs.colores[0] === "Personalizables";
+const colores = esPaletaPersonalizable
+  ? Array.from({ length: 30 }, (_, i) => `Color ${String(i + 1).padStart(2, "0")}`)
+  : modelo.specs.colores;
+
+const formularioHref = FORMULARIO_HREF_BY_TIPO_AJUSTE[modelo.tipo_ajuste] ?? "/formulario/estandar";
+---
+
+<Layout title={modelo.nombre} description={modelo.descripcion}>
+  <article class="detalle">
+    <div class="detalle-inner">
+      <a class="volver" href="/productos">← Todos los modelos</a>
+
+      <header class="detalle-header">
+        <p class="linea">{modelo.linea}</p>
+        <h1>{modelo.nombre}</h1>
+        <p class="gama">{modelo.gama} · {TIPO_AJUSTE_LABEL[modelo.tipo_ajuste] ?? modelo.tipo_ajuste}</p>
+      </header>
+
+      <div class="galeria">
+        {/*
+          Placeholder: fotos reales pendientes de mc-cargo-imagenes.zip (no
+          está en el repo). La spec autoriza usar fotos de stock genéricas
+          mientras tanto, pero se deja en placeholder por ahora — ver la
+          revisión pendiente de imágenes de stock ya usadas en 002/003/004.
+        */}
+        <div class="galeria-principal">
+          <span>{imagenPrincipal?.descripcion ?? "Foto pendiente"}</span>
+        </div>
+        {
+          imagenesSecundarias.length > 0 && (
+            <div class="galeria-grid">
+              {imagenesSecundarias.map((img) => (
+                <div class="galeria-item">
+                  <span>{img.descripcion}</span>
+                </div>
+              ))}
+            </div>
+          )
+        }
+      </div>
+
+      <p class="descripcion">{modelo.descripcion}</p>
+
+      {
+        modelo.destacados.length > 0 && (
+          <ul class="destacados">
+            {modelo.destacados.map((item) => (
+              <li>{item}</li>
+            ))}
+          </ul>
+        )
+      }
+
+      <section class="specs">
+        <h2>Specs técnicas</h2>
+        <dl>
+          <div>
+            <dt>Suela</dt>
+            <dd>{modelo.specs.suela}</dd>
+          </div>
+          <div>
+            <dt>Capellada</dt>
+            <dd>{modelo.specs.capellada}</dd>
+          </div>
+          <div>
+            <dt>Talles</dt>
+            <dd>
+              {modelo.specs.talles ? (
+                `${modelo.specs.talles.desde} al ${modelo.specs.talles.hasta}`
+              ) : (
+                // classic-semicustom no declara talles propios en el catálogo
+                // (comparte materiales con Classic Stock, 32 al 47) — errata
+                // de transcripción pendiente de confirmar con el cliente, no
+                // se "corrige" en silencio (ver meta.notas_de_transcripcion).
+                <span class="specs-pendiente">
+                  No declarado en el catálogo — pendiente de confirmar con el cliente
+                </span>
+              )}
+            </dd>
+          </div>
+        </dl>
+
+        {
+          modelo.specs.anclaje_mm && (
+            <table class="anclaje">
+              <caption>Anclaje (mm) según talle</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Medida</th>
+                  <th scope="col">Talles</th>
+                </tr>
+              </thead>
+              <tbody>
+                {modelo.specs.anclaje_mm.map((fila) => (
+                  <tr>
+                    <td>{fila.medida} mm</td>
+                    <td>
+                      {fila.talles}
+                      {"nota" in fila && <span class="specs-pendiente"> ({fila.nota})</span>}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )
+        }
+      </section>
+
+      <section class="colores">
+        <h2>Colores</h2>
+        {esPaletaPersonalizable && (
+          <p class="colores-nota">
+            Personalizables — paleta definitiva de colores pendiente de definir con el cliente.
+          </p>
+        )}
+        <ul class="colores-grid">
+          {colores.map((color) => <li>{color}</li>)}
+        </ul>
+      </section>
+
+      <div class="cta-row">
+        <a
+          class="cta-primary"
+          href={whatsappProductHref(modelo.nombre)}
+          data-whatsapp-msg={whatsappProductMessage(modelo.nombre)}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Preguntar por WhatsApp
+        </a>
+        <a class="cta-secondary" href={formularioHref}>
+          Completar formulario
+        </a>
+      </div>
+    </div>
+  </article>
+</Layout>
+
+<style>
+  .detalle {
+    padding: 3rem 1.25rem 5rem;
+  }
+
+  .detalle-inner {
+    max-width: 48rem;
+    margin: 0 auto;
+  }
+
+  .volver {
+    display: inline-block;
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+    text-decoration: none;
+  }
+
+  .volver:hover,
+  .volver:focus-visible {
+    color: var(--color-accent);
+  }
+
+  .detalle-header {
+    margin-top: 1.5rem;
+  }
+
+  .linea {
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--color-text-secondary);
+  }
+
+  .gama {
+    margin-top: 0.35rem;
+    color: var(--color-text-secondary);
+    font-size: 0.9rem;
+  }
+
+  .galeria {
+    margin-top: 2rem;
+  }
+
+  .galeria-principal {
+    aspect-ratio: 16 / 10;
+    border: 1px dashed rgba(176, 176, 176, 0.4);
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #1a1a1a;
+  }
+
+  .galeria-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
+    gap: 0.75rem;
+    margin-top: 0.75rem;
+  }
+
+  .galeria-item {
+    aspect-ratio: 4 / 3;
+    border: 1px dashed rgba(176, 176, 176, 0.4);
+    border-radius: 0.35rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #1a1a1a;
+    text-align: center;
+    padding: 0.5rem;
+  }
+
+  .galeria-principal span,
+  .galeria-item span {
+    font-size: 0.75rem;
+    color: var(--color-text-secondary);
+  }
+
+  .descripcion {
+    margin-top: 2rem;
+    color: var(--color-text-secondary);
+  }
+
+  .destacados {
+    margin: 1.25rem 0 0;
+    padding-left: 1.1rem;
+    color: var(--color-text-secondary);
+  }
+
+  .destacados li + li {
+    margin-top: 0.4rem;
+  }
+
+  .specs,
+  .colores {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(176, 176, 176, 0.15);
+  }
+
+  .specs h2,
+  .colores h2 {
+    font-size: 1rem;
+  }
+
+  .specs dl {
+    margin: 1.25rem 0 0;
+    display: grid;
+    gap: 0.9rem;
+  }
+
+  .specs dt {
+    font-family: var(--font-body);
+    font-weight: 600; /* Poppins SemiBold */
+    font-size: 0.8rem;
+  }
+
+  .specs dd {
+    margin: 0.2rem 0 0;
+    font-family: var(--font-body);
+    font-weight: 500; /* Poppins Medium — specs técnicas */
+    color: var(--color-text-secondary);
+    font-size: 0.85rem;
+  }
+
+  .anclaje {
+    margin-top: 1.5rem;
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+  }
+
+  .anclaje caption {
+    text-align: left;
+    font-size: 0.75rem;
+    color: var(--color-text-secondary);
+    margin-bottom: 0.5rem;
+  }
+
+  .anclaje th,
+  .anclaje td {
+    text-align: left;
+    padding: 0.5rem 0.75rem;
+    border-bottom: 1px solid rgba(176, 176, 176, 0.15);
+  }
+
+  .anclaje th {
+    font-family: var(--font-body);
+    font-weight: 600;
+    color: var(--color-text-secondary);
+  }
+
+  .anclaje td {
+    font-family: var(--font-body);
+    font-weight: 500;
+    color: var(--color-text-secondary);
+  }
+
+  .specs-pendiente {
+    font-style: italic;
+    color: var(--color-text-secondary);
+    opacity: 0.8;
+  }
+
+  .colores-nota {
+    margin: 1rem 0 0;
+    font-size: 0.8rem;
+    color: var(--color-text-secondary);
+  }
+
+  .colores-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    list-style: none;
+    margin: 1rem 0 0;
+    padding: 0;
+  }
+
+  .colores-grid li {
+    font-family: var(--font-body);
+    font-size: 0.7rem;
+    color: var(--color-text-secondary);
+    border: 1px solid rgba(176, 176, 176, 0.3);
+    border-radius: 999px;
+    padding: 0.25rem 0.7rem;
+  }
+
+  .cta-row {
+    margin-top: 3rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .cta-primary,
+  .cta-secondary {
+    display: inline-block;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+    padding: 0.85rem 1.5rem;
+    border-radius: 999px;
+  }
+
+  .cta-primary {
+    background: var(--color-accent);
+    color: var(--color-bg-primary);
+  }
+
+  .cta-primary:hover,
+  .cta-primary:focus-visible {
+    background: #33b5e8;
+  }
+
+  .cta-secondary {
+    color: var(--color-accent);
+    border: 1px solid var(--color-accent);
+  }
+
+  .cta-secondary:hover,
+  .cta-secondary:focus-visible {
+    background: rgba(0, 160, 227, 0.1);
+  }
+</style>
