@@ -72,7 +72,7 @@ const baseMessage = WHATSAPP_GENERIC_MESSAGE[locale];
     top: 0;
     z-index: 30;
     background: var(--color-bg-primary);
-    border-bottom: 1px solid rgba(176, 176, 176, 0.2); /* línea divisoria, único acento no-turquesa */
+    border-bottom: 1px solid var(--divider-default); /* línea divisoria, único acento no-turquesa */
   }
 
   .site-header-inner {
@@ -139,8 +139,10 @@ const baseMessage = WHATSAPP_GENERIC_MESSAGE[locale];
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 2.25rem;
-    height: 2.25rem;
+    /* impeccable adapt (P3): 2.75rem/44px meets WCAG 2.5.5 (AAA) target size —
+       was 2.25rem/36px, still ≥24px AA but this is the primary conversion CTA. */
+    width: 2.75rem;
+    height: 2.75rem;
     border-radius: 999px;
     background: var(--color-accent);
     color: var(--color-bg-primary);
@@ -151,8 +153,8 @@ const baseMessage = WHATSAPP_GENERIC_MESSAGE[locale];
     flex-direction: column;
     justify-content: center;
     gap: 4px;
-    width: 2.25rem;
-    height: 2.25rem;
+    width: 2.75rem;
+    height: 2.75rem;
     background: transparent;
     border: none;
     cursor: pointer;
@@ -176,17 +178,33 @@ const baseMessage = WHATSAPP_GENERIC_MESSAGE[locale];
       left: 0;
       right: 0;
       background: var(--color-bg-primary);
-      border-bottom: 1px solid rgba(176, 176, 176, 0.2);
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.2s ease;
+      border-bottom: 1px solid var(--divider-default);
+      display: grid;
+      grid-template-rows: 0fr;
+    }
+
+    /* impeccable optimize (P2): grid-template-rows instead of max-height —
+       same collapse/expand effect without animating a layout property that
+       has to guess an arbitrary max value.
+       impeccable harden (P3): the animated version is scoped to
+       no-preference — under prefers-reduced-motion the menu still opens and
+       closes correctly, just without the animated grow (see DESIGN.md,
+       "no global 0.01ms kill" — this only mutes the one motion on the site
+       that resembles real height/parallax movement, not the quick hover
+       color transitions elsewhere). */
+    @media (prefers-reduced-motion: no-preference) {
+      .site-nav {
+        transition: grid-template-rows 0.2s ease;
+      }
     }
 
     .site-nav.is-open {
-      max-height: 20rem;
+      grid-template-rows: 1fr;
     }
 
     .site-nav ul {
+      min-height: 0;
+      overflow: hidden;
       flex-direction: column;
       gap: 0;
       padding: 0.5rem 1.25rem 1rem;
@@ -194,7 +212,7 @@ const baseMessage = WHATSAPP_GENERIC_MESSAGE[locale];
 
     .site-nav li {
       padding: 0.6rem 0;
-      border-bottom: 1px solid rgba(176, 176, 176, 0.1);
+      border-bottom: 1px solid var(--divider-hairline);
     }
   }
 </style>

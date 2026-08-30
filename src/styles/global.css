@@ -13,6 +13,20 @@
   --font-body: "Poppins", sans-serif; /* pesos autorizados: 400 / 500 / 600 */
 
   --header-height: 4.5rem;
+
+  /* impeccable polish (P2, Theming): centraliza los rgba() de borde/divisor
+     que estaban repetidos literal en 9 archivos (ver docs/00-constitution.md
+     y DESIGN.md → Elevation & Depth). Ningún valor es nuevo — son los mismos
+     que ya usaba el código, solo nombrados una vez. */
+  --color-bg-surface: #1a1a1a; /* "Gris Oscuro Superficie" en DESIGN.md — media/foto placeholder */
+  --divider-hairline: rgba(176, 176, 176, 0.1); /* separador más sutil */
+  --divider-subtle: rgba(176, 176, 176, 0.15); /* borde superior de sección, el más común */
+  --divider-default: rgba(176, 176, 176, 0.2); /* divisor principal header/footer */
+  --divider-strong: rgba(176, 176, 176, 0.3); /* borde de chip neutral */
+  --divider-placeholder: rgba(176, 176, 176, 0.4); /* borde punteado "foto pendiente" */
+  --accent-border: rgba(0, 160, 227, 0.35); /* borde turquesa fino de cards/divisores */
+  --accent-tint-weak: rgba(0, 160, 227, 0.1); /* fondo hover de botón/link fantasma */
+  --accent-tint: rgba(0, 160, 227, 0.15); /* fondo hover de ítem de lista */
 }
 
 *,

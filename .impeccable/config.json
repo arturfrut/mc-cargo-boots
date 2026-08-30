@@ -1,0 +1,14 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "design-system-radius",
+        "value": "2px",
+        "createdAt": "2026-08-30T19:21:21.033Z",
+        "reason": "audited: 2px-tall hamburger-icon bars, a legitimate one-off decorative radius, not part of the card/button shape system"
+      }
+    ]
+  }
+}

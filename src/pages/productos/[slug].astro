@@ -216,12 +216,12 @@ const formularioHref = FORMULARIO_HREF_BY_TIPO_AJUSTE[modelo.tipo_ajuste] ?? "/f
 
   .galeria-principal {
     aspect-ratio: 16 / 10;
-    border: 1px dashed rgba(176, 176, 176, 0.4);
+    border: 1px dashed var(--divider-placeholder);
     border-radius: 0.5rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #1a1a1a;
+    background: var(--color-bg-surface);
   }
 
   .galeria-grid {
@@ -233,12 +233,12 @@ const formularioHref = FORMULARIO_HREF_BY_TIPO_AJUSTE[modelo.tipo_ajuste] ?? "/f
 
   .galeria-item {
     aspect-ratio: 4 / 3;
-    border: 1px dashed rgba(176, 176, 176, 0.4);
+    border: 1px dashed var(--divider-placeholder);
     border-radius: 0.35rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #1a1a1a;
+    background: var(--color-bg-surface);
     text-align: center;
     padding: 0.5rem;
   }
@@ -268,7 +268,7 @@ const formularioHref = FORMULARIO_HREF_BY_TIPO_AJUSTE[modelo.tipo_ajuste] ?? "/f
   .colores {
     margin-top: 3rem;
     padding-top: 2rem;
-    border-top: 1px solid rgba(176, 176, 176, 0.15);
+    border-top: 1px solid var(--divider-subtle);
   }
 
   .specs h2,
@@ -314,7 +314,7 @@ const formularioHref = FORMULARIO_HREF_BY_TIPO_AJUSTE[modelo.tipo_ajuste] ?? "/f
   .anclaje td {
     text-align: left;
     padding: 0.5rem 0.75rem;
-    border-bottom: 1px solid rgba(176, 176, 176, 0.15);
+    border-bottom: 1px solid var(--divider-subtle);
   }
 
   .anclaje th {
@@ -354,7 +354,7 @@ const formularioHref = FORMULARIO_HREF_BY_TIPO_AJUSTE[modelo.tipo_ajuste] ?? "/f
     font-family: var(--font-body);
     font-size: 0.7rem;
     color: var(--color-text-secondary);
-    border: 1px solid rgba(176, 176, 176, 0.3);
+    border: 1px solid var(--divider-strong);
     border-radius: 999px;
     padding: 0.25rem 0.7rem;
   }
@@ -394,6 +394,6 @@ const formularioHref = FORMULARIO_HREF_BY_TIPO_AJUSTE[modelo.tipo_ajuste] ?? "/f
 
   .cta-secondary:hover,
   .cta-secondary:focus-visible {
-    background: rgba(0, 160, 227, 0.1);
+    background: var(--accent-tint-weak);
   }
 </style>

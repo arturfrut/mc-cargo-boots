@@ -86,19 +86,19 @@ const TIPO_AJUSTE_LABEL: Record<string, string> = {
     flex-direction: column;
     text-decoration: none;
     color: var(--color-text-primary);
-    border: 1px solid rgba(0, 160, 227, 0.35); /* divisor turquesa fino, acento no relleno */
+    border: 1px solid var(--accent-border); /* divisor turquesa fino, acento no relleno */
     border-radius: 0.5rem;
     padding: 1.25rem;
   }
 
   .card-media {
     aspect-ratio: 4 / 3;
-    border: 1px dashed rgba(176, 176, 176, 0.4);
+    border: 1px dashed var(--divider-placeholder);
     border-radius: 0.35rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #1a1a1a;
+    background: var(--color-bg-surface);
   }
 
   .card-media span {

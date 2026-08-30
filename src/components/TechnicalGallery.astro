@@ -48,7 +48,7 @@ const detalles = catalogo.modelos.flatMap((modelo) =>
 <style>
   .gallery {
     padding: 4.5rem 1.25rem;
-    border-top: 1px solid rgba(176, 176, 176, 0.15);
+    border-top: 1px solid var(--divider-subtle);
   }
 
   .gallery-inner {
@@ -76,7 +76,7 @@ const detalles = catalogo.modelos.flatMap((modelo) =>
     aspect-ratio: 4 / 3;
     margin: 0;
     scroll-snap-align: start;
-    border: 1px dashed rgba(176, 176, 176, 0.4);
+    border: 1px dashed var(--divider-placeholder);
     border-radius: 0.5rem;
     display: flex;
     flex-direction: column;
@@ -84,7 +84,7 @@ const detalles = catalogo.modelos.flatMap((modelo) =>
     justify-content: center;
     text-align: center;
     padding: 1rem;
-    background: #1a1a1a;
+    background: var(--color-bg-surface);
   }
 
   .carousel-item span {
@@ -109,7 +109,7 @@ const detalles = catalogo.modelos.flatMap((modelo) =>
   .servicio {
     margin-top: 3rem;
     padding-top: 2rem;
-    border-top: 1px solid rgba(176, 176, 176, 0.15);
+    border-top: 1px solid var(--divider-subtle);
     max-width: 36rem;
   }
 
