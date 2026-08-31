@@ -1,16 +1,84 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import Hero from "../components/Hero.astro";
-import Nosotros from "../components/Nosotros.astro";
-import ProductosHome from "../components/ProductosHome.astro";
-import Contacto from "../components/Contacto.astro";
-import TechnicalGallery from "../components/TechnicalGallery.astro";
+// Placeholder "en construcción" — el sitio completo está respaldado en la
+// rama `site-full` de este mismo repo. Ver plan de reducción de main.
+import "../styles/global.css";
 ---
 
-<Layout title="Inicio">
-  <Hero />
-  <Nosotros />
-  <ProductosHome />
-  <Contacto />
-  <TechnicalGallery />
-</Layout>
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="MC Cargo Boots — sitio en construcción." />
+    <title>MC Cargo Boots</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Rajdhani:wght@700&family=Righteous&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <main class="wrap">
+      <h1>MC CARGO <span class="accent">BOOTS</span></h1>
+      <p class="tagline">Estamos en construcción.</p>
+      <p class="soon">Próximamente.</p>
+      <a class="ig" href="https://instagram.com/mccargoboots" target="_blank" rel="noopener noreferrer">
+        @mccargoboots
+      </a>
+    </main>
+  </body>
+</html>
+
+<style>
+  .wrap {
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 1.5rem;
+    gap: 0.75rem;
+  }
+
+  h1 {
+    font-size: clamp(1.75rem, 6vw, 3rem);
+    line-height: 1.15;
+  }
+
+  .tagline {
+    font-family: var(--font-h2);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-size: clamp(1rem, 3vw, 1.25rem);
+    color: var(--color-text-secondary);
+    margin: 0.5rem 0 0;
+  }
+
+  .soon {
+    margin: 0;
+    color: var(--color-text-secondary);
+  }
+
+  .ig {
+    margin-top: 1.5rem;
+    font-family: var(--font-h2);
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    border: 1px solid var(--accent-border);
+    background: var(--accent-tint-weak);
+    color: var(--color-accent);
+    padding: 0.5rem 1rem;
+    border-radius: 999px;
+    transition: background 0.15s ease;
+  }
+
+  .ig:hover {
+    background: var(--accent-tint);
+  }
+</style>

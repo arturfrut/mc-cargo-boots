@@ -2,14 +2,7 @@
 import { defineConfig } from 'astro/config';
 
 // https://astro.build/config
-export default defineConfig({
-  // docs/specs/010-i18n-region.md: español sin prefijo (default), inglés bajo
-  // /en/... cuando la región detectada/elegida es "Global".
-  i18n: {
-    locales: ['es', 'en'],
-    defaultLocale: 'es',
-    routing: {
-      prefixDefaultLocale: false,
-    },
-  },
-});
+// Config reducida al mínimo mientras main sirve solo el placeholder "en
+// construcción" — el sitio completo (con i18n, ver docs/specs/010-i18n-region.md)
+// vive respaldado en la rama `site-full`.
+export default defineConfig({});
