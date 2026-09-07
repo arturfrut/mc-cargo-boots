@@ -1,0 +1,222 @@
+---
+// docs/catalog/formularios-relevamiento-custom.md §1-§1e (relevado 2026-09-06).
+// tipo_ajuste "semi-custom" en catalogo.json → src/lib/constants.ts FORMULARIO_HREF_BY_TIPO_AJUSTE.
+import FormShell from "../../components/formulario/FormShell.astro";
+import Step from "../../components/formulario/Step.astro";
+import Stepper from "../../components/formulario/Stepper.astro";
+import InstructionBlock from "../../components/formulario/InstructionBlock.astro";
+import TextField from "../../components/formulario/TextField.astro";
+import NumberField from "../../components/formulario/NumberField.astro";
+import RadioGroup from "../../components/formulario/RadioGroup.astro";
+import FileField from "../../components/formulario/FileField.astro";
+import ModelPicker from "../../components/formulario/ModelPicker.astro";
+import ColorPickerField from "../../components/formulario/ColorPickerField.astro";
+import { COLOR_CODES, SIDE_COLOR_OPTIONS } from "../../lib/formularios/color-codes";
+
+import largo1 from "../../assets/formularios/semicustom-largo-01.png";
+import largo2 from "../../assets/formularios/semicustom-largo-02.png";
+import ancho1 from "../../assets/formularios/semicustom-ancho-01.png";
+import ancho2 from "../../assets/formularios/semicustom-ancho-02.png";
+import instr1 from "../../assets/formularios/semicustom-instrumento-01.png";
+import instr2 from "../../assets/formularios/semicustom-instrumento-02.png";
+import modeloClassic from "../../assets/formularios/semicustom-modelo-classic.png";
+import modeloUltraLight from "../../assets/formularios/semicustom-modelo-ultralight.png";
+import modeloUlPlus from "../../assets/formularios/semicustom-modelo-ulplus.png";
+import cartaClassic from "../../assets/formularios/semicustom-classic-carta-colores.png";
+import cartaUlPlus from "../../assets/formularios/semicustom-ulplus-carta-colores.png";
+import fondoTapaEjemplo from "../../assets/formularios/semicustom-ulplus-fondo-tapa-ejemplo.png";
+
+const relatedForms = [
+  { href: "/formulario/sobrehueso-calcaneo", label: "sobrehueso calcáneo" },
+  { href: "/formulario/sobrehueso-escafoides", label: "sobrehueso escafoides" },
+];
+
+const bordadoHelp =
+  "El color de los bordados se asemejará lo más posible al tono pedido, lo que no garantiza que sea exactamente igual.";
+---
+
+<FormShell
+  title="Formulario botas semi-custom"
+  description="Formulario de personalización de botas semi-custom — MC Cargo Boots."
+  intro={[
+    "Las botas semi-custom ofrecen la posibilidad de personalizar los colores como más te guste. Y también intentamos personalizar al máximo el ajuste, por lo que, si bien es una bota fabricada con nuestras hormas estándar de base, con su personalización se logra una gran performance. En ellas utilizamos la misma calidad de materiales que en nuestras botas a molde, y elegimos la horma más adecuada para vos.",
+  ]}
+  formId="form-semi-custom"
+  relatedForms={relatedForms}
+>
+  <Step id="1" title="Datos y medidas">
+    <InstructionBlock
+      title="Medidas de largo máximo del pie"
+      paragraphs={[
+        "1- Apoyar levemente (sin empujar) el talón en el zócalo de la pared.",
+        "2- Trasladar la medida del dedo más largo con una regla de 90° al piso y marcar con un lápiz.",
+        "3- Tomar la medida del zócalo a la marca.",
+      ]}
+      images={[
+        { src: largo1, alt: "Medir largo del pie contra el zócalo de la pared" },
+        { src: largo2, alt: "Trasladar la medida del dedo más largo" },
+      ]}
+    />
+    <InstructionBlock
+      title="Medidas ancho máximo del pie (del 1° al 5° metatarso)"
+      paragraphs={[
+        "1- Apoyar levemente (sin empujar) el lateral externo del pie en el zócalo de la pared (la zona más ancha, 5° metatarso/juanete externo), prestando atención que el pie quede perpendicular a la pared.",
+        "2- Trasladar la medida del 1° metatarso (juanete interior) con una regla de 90° al piso y marcar con un lápiz.",
+        "3- Tomar la medida del zócalo a la marca.",
+      ]}
+      images={[
+        { src: ancho1, alt: "Medir ancho máximo del pie" },
+        { src: ancho2, alt: "Trasladar la medida del 1° metatarso" },
+      ]}
+    />
+    <InstructionBlock
+      title="Instrumento de medición"
+      paragraphs={["Usar regla, cinta métrica o centímetro en la cual comience desde el cero (prestar atención que no esté separado)."]}
+      images={[
+        { src: instr1, alt: "Ejemplo de instrumento de medición" },
+        { src: instr2, alt: "Otro instrumento de medición válido" },
+      ]}
+    />
+
+    <TextField name="nombre" label="Nombre completo" required />
+    <NumberField name="largo_derecho_mm" label='Medida "exacta" del largo — Derecho' min={180} max={330} helpText="Medida exacta, sin agregar ni quitar milímetros." />
+    <NumberField name="largo_izquierdo_mm" label='Medida "exacta" del largo — Izquierdo' min={180} max={330} helpText="Medida exacta, sin agregar ni quitar milímetros." />
+    <NumberField name="ancho_derecho_mm" label='Medida "exacta" del ancho máximo — Derecho' min={60} max={140} helpText="Medida exacta, sin agregar ni quitar milímetros." />
+    <NumberField name="ancho_izquierdo_mm" label='Medida "exacta" del ancho máximo — Izquierdo' min={60} max={140} helpText="Medida exacta, sin agregar ni quitar milímetros." />
+    <NumberField name="edad" label="Edad" unit="años" min={1} max={110} />
+    <RadioGroup name="sexo" legend="Sexo" options={[{ value: "M", label: "Masculino" }, { value: "F", label: "Femenino" }]} />
+    <TextField name="direccion" label="Dirección completa" />
+    <TextField name="localidad" label="Localidad" required />
+    <TextField name="provincia" label="Provincia / Estado" required />
+    <TextField name="pais" label="País" required />
+    <TextField name="red_social" label="Red social por donde se contacta y usuario" required />
+    <RadioGroup name="uso" legend="Uso" options={[{ value: "recreativo", label: "Recreativo/Fitness" }, { value: "competicion", label: "Competición" }]} />
+    <NumberField name="anios_patinando" label="Cantidad de años en el patinaje" unit="años" min={0} max={80} />
+    <TextField name="bota_en_uso" label="Bota en uso (marca, modelo, de competición o rollers/fitness)" required />
+    <TextField name="talle_calzado" label="Talle de calzado tradicional" required />
+    <TextField name="talle_bota" label="Talle de bota en uso" required />
+    <RadioGroup
+      name="contextura"
+      legend="Contextura del pie"
+      options={[{ value: "fina", label: "Fina" }, { value: "mediana", label: "Mediana" }, { value: "grande", label: "Grande" }]}
+    />
+    <TextField
+      name="datos_extra"
+      label="Datos extras que puedan influir en el calce de la bota (sobrehueso, juanetes, etc.)"
+      multiline
+    />
+
+    <InstructionBlock
+      title="Fotos de los pies"
+      paragraphs={[
+        "Enviá fotos de los pies con estas vistas: superior pies juntos, posterior pies juntos, lateral exterior (una foto por pie), lateral interior (una foto por pie) y posterior (una foto por pie).",
+      ]}
+    />
+    <FileField name="foto_superior_juntos" label="Vista superior pies juntos" required />
+    <FileField name="foto_posterior_juntos" label="Vista posterior pies juntos" required />
+    <FileField name="foto_lateral_ext_derecho" label="Vista lateral exterior — pie derecho" required />
+    <FileField name="foto_lateral_ext_izquierdo" label="Vista lateral exterior — pie izquierdo" required />
+    <FileField name="foto_lateral_int_derecho" label="Vista lateral interior — pie derecho" required />
+    <FileField name="foto_lateral_int_izquierdo" label="Vista lateral interior — pie izquierdo" required />
+    <FileField name="foto_posterior_derecho" label="Vista posterior — pie derecho" required />
+    <FileField name="foto_posterior_izquierdo" label="Vista posterior — pie izquierdo" required />
+  </Step>
+
+  <Step id="2" title="Elegí tu modelo">
+    <ModelPicker
+      name="modelo"
+      legend="Modelo elegido"
+      options={[
+        { value: "classic", label: "Classic", image: modeloClassic },
+        { value: "ultralight", label: "Ultra Light", image: modeloUltraLight },
+        { value: "ulplus", label: "UL+", image: modeloUlPlus },
+      ]}
+    />
+  </Step>
+
+  <Step id="3-classic" title="Colores — Classic">
+    <RadioGroup name="color_laterales" legend="Color laterales (color general de la bota)" options={SIDE_COLOR_OPTIONS} />
+    <ColorPickerField name="color_tapa" label="Color tapa" options={COLOR_CODES} chartImage={cartaClassic} chartAlt="Carta de colores Classic" helpText={bordadoHelp} />
+    <ColorPickerField name="color_bordado_tapa" label="Color bordado tapa" options={COLOR_CODES} chartImage={cartaClassic} chartAlt="Carta de colores Classic" />
+    <ColorPickerField name="color_talon" label="Color talón" options={COLOR_CODES} chartImage={cartaClassic} chartAlt="Carta de colores Classic" />
+    <ColorPickerField name="color_bordado_talon" label="Color bordado talón" options={COLOR_CODES} chartImage={cartaClassic} chartAlt="Carta de colores Classic" />
+    <FileField name="bordado_talon_derecho_classic" label="Dibujo bordado talón derecho (opcional, no logo de marca)" />
+    <FileField name="bordado_talon_izquierdo_classic" label="Dibujo bordado talón izquierdo (opcional, no logo de marca)" />
+    <TextField name="escritura_stickers_classic" label="Escritura stickers" required />
+    <ColorPickerField
+      name="color_fondo_stickers_classic"
+      label='Color fondo stickers (si querés una bandera, elegí "Otra opción")'
+      options={[...COLOR_CODES, "Otra opción (bandera)"]}
+      chartImage={cartaClassic}
+      chartAlt="Carta de colores Classic"
+    />
+    <TextField name="bandera_classic" label="Si elegiste bandera, indicá cuál" />
+  </Step>
+
+  <Step id="3-ultralight" title="Colores — Ultra Light">
+    <RadioGroup name="color_laterales" legend="Color laterales (color general de la bota)" options={SIDE_COLOR_OPTIONS} />
+    <ColorPickerField name="color_tapa" label="Color tapa" options={COLOR_CODES} chartImage={cartaClassic} chartAlt="Carta de colores Ultra Light" helpText={bordadoHelp} />
+    <ColorPickerField name="color_bordado_tapa" label="Color bordado tapa" options={COLOR_CODES} chartImage={cartaClassic} chartAlt="Carta de colores Ultra Light" />
+    <ColorPickerField name="color_talon" label="Color talón" options={COLOR_CODES} chartImage={cartaClassic} chartAlt="Carta de colores Ultra Light" />
+    <ColorPickerField name="color_bordado_talon" label="Color bordado talón" options={COLOR_CODES} chartImage={cartaClassic} chartAlt="Carta de colores Ultra Light" />
+    <FileField name="bordado_talon_derecho_ul" label="Dibujo bordado talón derecho (opcional, no logo de marca)" />
+    <FileField name="bordado_talon_izquierdo_ul" label="Dibujo bordado talón izquierdo (opcional, no logo de marca)" />
+    <TextField name="escritura_stickers_ul" label="Escritura stickers" required />
+    <ColorPickerField
+      name="color_fondo_stickers_ul"
+      label='Color fondo stickers (si querés una bandera, elegí "Otra opción")'
+      options={[...COLOR_CODES, "Otra opción (bandera)"]}
+      chartImage={cartaClassic}
+      chartAlt="Carta de colores Ultra Light"
+    />
+    <TextField name="bandera_ul" label="Si elegiste bandera, indicá cuál" />
+  </Step>
+
+  <Step id="3-ulplus" title="Colores — UL+">
+    <RadioGroup name="color_laterales" legend="Color laterales (color general de la bota)" options={SIDE_COLOR_OPTIONS} />
+    <ColorPickerField name="color_tapa" label="Color tapa" options={COLOR_CODES} chartImage={cartaUlPlus} chartAlt="Carta de colores UL+" helpText={bordadoHelp} />
+    <ColorPickerField
+      name="color_fondo_tapa"
+      label='Color fondo de la tapa (el cuero de abajo de la tapa, ver foto)'
+      options={COLOR_CODES}
+      chartImage={fondoTapaEjemplo}
+      chartAlt="Foto señalando el fondo de la tapa"
+    />
+    <ColorPickerField name="color_bordado_tapa" label="Color bordado tapa" options={COLOR_CODES} chartImage={cartaUlPlus} chartAlt="Carta de colores UL+" />
+    <ColorPickerField name="color_talon" label="Color talón" options={COLOR_CODES} chartImage={cartaUlPlus} chartAlt="Carta de colores UL+" />
+    <ColorPickerField name="color_bordado_talon" label="Color bordado talón" options={COLOR_CODES} chartImage={cartaUlPlus} chartAlt="Carta de colores UL+" />
+    <FileField name="bordado_talon_derecho_ulplus" label="Dibujo bordado talón derecho (opcional, no logo de marca)" />
+    <FileField name="bordado_talon_izquierdo_ulplus" label="Dibujo bordado talón izquierdo (opcional, no logo de marca)" />
+    <TextField name="escritura_stickers_ulplus" label="Escritura stickers" required />
+    <ColorPickerField
+      name="color_fondo_stickers_ulplus"
+      label='Color fondo stickers (si querés una bandera, elegí "Otra opción")'
+      options={[...COLOR_CODES, "Otra opción (bandera)"]}
+      chartImage={cartaUlPlus}
+      chartAlt="Carta de colores UL+"
+    />
+    <TextField name="bandera_ulplus" label="Si elegiste bandera, indicá cuál" />
+  </Step>
+
+  <Fragment slot="stepper"><Stepper /></Fragment>
+</FormShell>
+
+<script>
+  import { initFormWizard } from "../../lib/formulario-wizard";
+
+  initFormWizard({
+    formId: "form-semi-custom",
+    steps: ["1", "2"],
+    branches: {
+      "2": {
+        field: "modelo",
+        targets: {
+          classic: "3-classic",
+          ultralight: "3-ultralight",
+          ulplus: "3-ulplus",
+        },
+      },
+    },
+    terminal: ["3-classic", "3-ultralight", "3-ulplus"],
+  });
+</script>

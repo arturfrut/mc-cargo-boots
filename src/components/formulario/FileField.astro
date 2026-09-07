@@ -1,0 +1,75 @@
+---
+// Campo de subida de archivo. ADR 0004: solo UI, la carga no está conectada a
+// ningún backend/storage todavía — el input queda en el DOM (se puede elegir un
+// archivo, queda en el resumen final) pero no se envía a ningún lado.
+interface Props {
+  name: string;
+  label: string;
+  required?: boolean;
+  maxSizeLabel?: string;
+  accept?: string;
+}
+
+const { name, label, required = false, maxSizeLabel = "10 MB", accept = "image/*" } = Astro.props;
+const id = `f-${name}`;
+---
+
+<div class="field">
+  <label for={id}>
+    {label}
+    {required && <span class="req" aria-hidden="true">*</span>}
+  </label>
+  <input id={id} name={name} type="file" accept={accept} required={required} />
+  <p class="help">
+    Tamaño máximo sugerido: {maxSizeLabel}. La carga de archivos todavía no está conectada a ningún
+    almacenamiento — por ahora solo queda registrado el nombre del archivo en el resumen final.
+  </p>
+</div>
+
+<style>
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  label {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.85rem;
+  }
+
+  .req {
+    color: var(--color-accent);
+    margin-left: 0.15rem;
+  }
+
+  input[type="file"] {
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+    border: 1px dashed var(--divider-placeholder);
+    border-radius: 0.35rem;
+    padding: 0.65rem 0.75rem;
+    background: var(--color-bg-surface);
+  }
+
+  input[type="file"]::file-selector-button {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.8rem;
+    color: var(--color-accent);
+    background: var(--accent-tint-weak);
+    border: 1px solid var(--color-accent);
+    border-radius: 999px;
+    padding: 0.4rem 0.9rem;
+    margin-right: 0.75rem;
+    cursor: pointer;
+  }
+
+  .help {
+    margin: 0;
+    font-size: 0.75rem;
+    color: var(--color-text-secondary);
+  }
+</style>

@@ -1,0 +1,154 @@
+---
+// Cabecera + <form> + panel de confirmación compartidos por las 5 páginas de
+// /formulario/*. Mismo ancho/estructura que productos/[slug].astro (columna
+// de lectura única, 48rem). docs/specs/007-formularios.md.
+import Layout from "../../layouts/Layout.astro";
+
+interface RelatedForm {
+  href: string;
+  label: string;
+}
+
+interface Props {
+  title: string;
+  description?: string;
+  intro?: string[];
+  formId: string;
+  relatedForms?: RelatedForm[];
+}
+
+const { title, description, intro = [], formId, relatedForms = [] } = Astro.props;
+---
+
+<Layout title={title} description={description}>
+  <article class="formulario">
+    <div class="formulario-inner">
+      <a class="volver" href="/productos">← Todos los modelos</a>
+
+      <header class="formulario-header">
+        <h1>{title}</h1>
+        {intro.map((p) => <p class="intro">{p}</p>)}
+      </header>
+
+      {
+        relatedForms.length > 0 && (
+          <p class="related">
+            ¿Tenés sobrehueso calcáneo o escafoides? Completá también:{" "}
+            {relatedForms.map((f, i) => (
+              <>
+                <a href={f.href}>{f.label}</a>
+                {i < relatedForms.length - 1 ? " · " : ""}
+              </>
+            ))}
+          </p>
+        )
+      }
+
+      <form id={formId} novalidate>
+        <slot />
+        <slot name="stepper" />
+
+        <div class="confirm-panel" data-wizard-confirm hidden>
+          <h2>Formulario listo</h2>
+          <p>
+            El envío automático todavía no está conectado — por ahora, guardá o enviá esta captura de
+            pantalla mientras definimos con vos el destino final de los datos.
+          </p>
+          <pre data-wizard-summary></pre>
+        </div>
+      </form>
+    </div>
+  </article>
+</Layout>
+
+<style>
+  .formulario {
+    padding: 3rem 1.25rem 5rem;
+  }
+
+  .formulario-inner {
+    max-width: 48rem;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .volver {
+    display: inline-block;
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+    text-decoration: none;
+  }
+
+  .volver:hover,
+  .volver:focus-visible {
+    color: var(--color-accent);
+  }
+
+  .formulario-header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .intro {
+    margin: 0;
+    color: var(--color-text-secondary);
+    font-size: 0.9rem;
+  }
+
+  .related {
+    margin: 0;
+    font-size: 0.8rem;
+    color: var(--color-text-secondary);
+    border: 1px solid var(--divider-subtle);
+    border-radius: 0.35rem;
+    padding: 0.75rem 1rem;
+  }
+
+  .related a {
+    color: var(--color-accent);
+    text-decoration: none;
+  }
+
+  .related a:hover,
+  .related a:focus-visible {
+    text-decoration: underline;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .confirm-panel {
+    border: 1px solid var(--accent-border);
+    background: var(--accent-tint-weak);
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+  }
+
+  .confirm-panel h2 {
+    font-size: 1rem;
+    margin: 0 0 0.5rem;
+  }
+
+  .confirm-panel p {
+    margin: 0 0 1rem;
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+  }
+
+  .confirm-panel pre {
+    white-space: pre-wrap;
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    color: var(--color-text-primary);
+    background: var(--color-bg-surface);
+    border-radius: 0.35rem;
+    padding: 1rem;
+    margin: 0;
+  }
+</style>

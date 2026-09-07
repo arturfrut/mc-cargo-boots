@@ -1,0 +1,208 @@
+---
+// docs/catalog/formularios-relevamiento-custom.md §7-§7f (relevado 2026-09-06).
+// Formulario "a molde/custom" — original 100% en inglés (se mantiene así, ver nota i18n
+// en el relevamiento §7). Todavía sin ningún modelo en catalogo.json con este tipo_ajuste,
+// así que no hay CTA de producto apuntando acá — se llega solo por URL directa por ahora.
+import FormShell from "../../components/formulario/FormShell.astro";
+import Step from "../../components/formulario/Step.astro";
+import Stepper from "../../components/formulario/Stepper.astro";
+import TextField from "../../components/formulario/TextField.astro";
+import NumberField from "../../components/formulario/NumberField.astro";
+import RadioGroup from "../../components/formulario/RadioGroup.astro";
+import ModelPicker from "../../components/formulario/ModelPicker.astro";
+import ColorPickerField from "../../components/formulario/ColorPickerField.astro";
+import InstructionBlock from "../../components/formulario/InstructionBlock.astro";
+import { COLOR_CODES } from "../../lib/formularios/color-codes";
+
+import modeloUlPlus from "../../assets/formularios/custom-modelo-ulplus.png";
+import modeloUltraLight from "../../assets/formularios/semicustom-modelo-ultralight.png";
+import modeloClassic from "../../assets/formularios/custom-modelo-classic.png";
+import cartaUlPlus from "../../assets/formularios/custom-ulplus-carta-colores.png";
+import diagramaUlPlus from "../../assets/formularios/custom-ulplus-carta-colores-02.png";
+import diagramaUltraLight from "../../assets/formularios/custom-ultralight-diagrama.png";
+import diagramaClassic from "../../assets/formularios/custom-classic-diagrama.png";
+import fondoTapaEjemplo from "../../assets/formularios/semicustom-ulplus-fondo-tapa-ejemplo.png";
+
+const SIDE_COLOR_OPTIONS_EN = [
+  { value: "N1", label: "Black (N1)" },
+  { value: "B1", label: "White (B1)" },
+];
+
+const embroideryHelp =
+  "The color of the embroidery will be attempted to be as similar as possible to the requested tone.";
+---
+
+<FormShell
+  title="Mc Cargo custom boots form"
+  description="A molde / custom boots form — MC Cargo Boots."
+  intro={[
+    "Formulario para botas a molde/custom. Se mantiene en inglés, igual que el original del cliente.",
+  ]}
+  formId="form-a-medida"
+>
+  <Step id="1" title="1. Athlete information">
+    <TextField name="first_name" label="First name" required />
+    <TextField name="last_name" label="Last name" required />
+    <NumberField name="age" label="Age" unit="years" min={1} max={110} />
+    <RadioGroup name="sex" legend="Sex" options={[{ value: "male", label: "Male" }, { value: "female", label: "Female" }]} />
+    <TextField name="street" label="Street" required />
+    <TextField name="postal_city" label="Postal Code / City" required />
+    <TextField name="country" label="Country" required />
+    <TextField name="phone" label="Phone" required />
+    <TextField name="email" label="e-mail" required />
+    <TextField name="social_networks" label="Social networks (Instagram / Facebook)" />
+    <RadioGroup name="specialty" legend="Specialty" options={[{ value: "sprinter", label: "Sprinter" }, { value: "long_distance", label: "Long distance" }]} />
+    <TextField name="level" label="Level (Example: world, national, amateur, etc.)" required />
+    <NumberField name="years_skating" label="Years skating" unit="years" min={0} max={80} />
+  </Step>
+
+  <Step id="2" title="2. Boot / Frame Information">
+    <NumberField name="shoe_size" label="Regular shoe size" unit="" min={0} max={60} />
+    <TextField name="current_boot" label="Current boot brand / model" />
+    <RadioGroup
+      name="mounting_distance"
+      legend="Mounting distance"
+      options={[{ value: "165", label: "165mm" }, { value: "195", label: "195mm" }]}
+    />
+  </Step>
+
+  <Step id="3" title="3. Specifications of custom boot">
+    <RadioGroup
+      name="pref_length"
+      legend="Preferred length of boot"
+      options={[{ value: "short", label: "short" }, { value: "normal", label: "normal" }, { value: "long", label: "long" }]}
+    />
+    <RadioGroup
+      name="pref_width"
+      legend="Preferred width of the boot"
+      options={[{ value: "narrow", label: "narrow" }, { value: "normal", label: "normal" }, { value: "wide", label: "wide" }]}
+    />
+    <RadioGroup
+      name="pref_strength"
+      legend="Preferred strength of the boot"
+      options={[{ value: "normal", label: "normal" }, { value: "stiff", label: "stiff" }, { value: "extra_stiff", label: "extra stiff" }]}
+    />
+    <RadioGroup
+      name="pref_height"
+      legend="Preferred height of the boot"
+      options={[{ value: "low", label: "low" }, { value: "medium", label: "medium" }, { value: "high", label: "high" }]}
+    />
+    <TextField name="problem_zones" label="Problem zones on foot (if there are any) / mark on the cast" multiline />
+    <RadioGroup
+      name="wheel_size"
+      legend="You will generally use it with wheels"
+      options={[{ value: "100_110", label: "100/110mm" }, { value: "125", label: "125mm" }]}
+    />
+    <TextField name="extras" label="Extras" multiline />
+    <NumberField name="length_left" label="Measurements length — Left" min={180} max={330} />
+    <NumberField name="length_right" label="Measurements length — Right" min={180} max={330} />
+
+    <ModelPicker
+      name="model"
+      legend="Model chosen"
+      options={[
+        { value: "ulplus", label: "Ultra Light - UL+", image: modeloUlPlus },
+        { value: "ultralight", label: "Ultra Light", image: modeloUltraLight },
+        { value: "classic", label: "Classic", image: modeloClassic },
+      ]}
+    />
+  </Step>
+
+  <Step id="4-ulplus" title="Colors UL+">
+    <p class="step-note">{embroideryHelp}</p>
+    <RadioGroup name="sides_color" legend="Sides color (general color of the boot)" options={SIDE_COLOR_OPTIONS_EN} />
+    <ColorPickerField name="flap_color" label="Flap color" options={COLOR_CODES} chartImage={cartaUlPlus} chartAlt="UL+ color chart" />
+    <ColorPickerField
+      name="flap_background_color"
+      label="Background color of the flap (the leather underneath the flap, see photo)"
+      options={COLOR_CODES}
+      chartImage={fondoTapaEjemplo}
+      chartAlt="Photo pointing at the flap background"
+    />
+    <ColorPickerField name="flap_embroidered_color" label="Color flap embroidered" options={COLOR_CODES} chartImage={cartaUlPlus} chartAlt="UL+ color chart" />
+    <ColorPickerField name="heel_color" label="Heel color" options={COLOR_CODES} chartImage={cartaUlPlus} chartAlt="UL+ color chart" />
+    <ColorPickerField name="heel_embroidered_color" label="Color heel embroidered" options={COLOR_CODES} chartImage={cartaUlPlus} chartAlt="UL+ color chart" />
+    <InstructionBlock paragraphs={[]} images={[{ src: diagramaUlPlus, alt: "Diagram: which zone corresponds to each color field (UL+)" }]} />
+    <TextField name="stickers_script" label="Stickers script" required />
+    <ColorPickerField
+      name="stickers_bg_color"
+      label='Background color stickers (if you want any flag, select "Another option")'
+      options={[...COLOR_CODES, "Another option (flag)"]}
+      chartImage={cartaUlPlus}
+      chartAlt="UL+ color chart"
+    />
+    <TextField name="flag" label="If you chose a flag, indicate which one" />
+  </Step>
+
+  <Step id="4-ultralight" title="Ultra Light Colors">
+    <p class="step-note">{embroideryHelp}</p>
+    <RadioGroup name="sides_color" legend="Side color (general color of the boot)" options={SIDE_COLOR_OPTIONS_EN} />
+    <RadioGroup
+      name="side_reinforcement"
+      legend="Do you want it with or without side reinforcement?"
+      options={[{ value: "with", label: "With side reinforcement" }, { value: "without", label: "Without side reinforcement" }]}
+    />
+    <ColorPickerField name="flap_color" label="Flap color" options={COLOR_CODES} chartImage={cartaUlPlus} chartAlt="Ultra Light color chart" />
+    <ColorPickerField name="flap_embroidered_color" label="Embroidered flap color" options={COLOR_CODES} chartImage={cartaUlPlus} chartAlt="Ultra Light color chart" />
+    <ColorPickerField name="heel_color" label="Heel color" options={COLOR_CODES} chartImage={cartaUlPlus} chartAlt="Ultra Light color chart" />
+    <ColorPickerField name="heel_embroidered_color" label="Embroidered heel color" options={COLOR_CODES} chartImage={cartaUlPlus} chartAlt="Ultra Light color chart" />
+    <InstructionBlock paragraphs={[]} images={[{ src: diagramaUltraLight, alt: "Diagram: which zone corresponds to each color field (Ultra Light)" }]} />
+    <TextField name="stickers_script" label="Stickers script" required />
+    <ColorPickerField
+      name="stickers_bg_color"
+      label='Background color stickers (if you want any flag, select "Another option")'
+      options={[...COLOR_CODES, "Another option (flag)"]}
+      chartImage={cartaUlPlus}
+      chartAlt="Ultra Light color chart"
+    />
+    <TextField name="flag" label="If you chose a flag, indicate which one" />
+  </Step>
+
+  <Step id="4-classic" title="Classic Colors">
+    <p class="step-note">{embroideryHelp}</p>
+    <RadioGroup name="side_color" legend="Side color (general color of the boot)" options={SIDE_COLOR_OPTIONS_EN} />
+    <ColorPickerField name="flap_color" label="Flap color" options={COLOR_CODES} chartImage={cartaUlPlus} chartAlt="Classic color chart" />
+    <ColorPickerField name="flap_embroidered_color" label="Embroidered flap color" options={COLOR_CODES} chartImage={cartaUlPlus} chartAlt="Classic color chart" />
+    <ColorPickerField name="heel_color" label="Heel color" options={COLOR_CODES} chartImage={cartaUlPlus} chartAlt="Classic color chart" />
+    <ColorPickerField name="heel_embroidered_color" label="Embroidered heel color" options={COLOR_CODES} chartImage={cartaUlPlus} chartAlt="Classic color chart" />
+    <InstructionBlock paragraphs={[]} images={[{ src: diagramaClassic, alt: "Diagram: which zone corresponds to each color field (Classic)" }]} />
+    <TextField name="stickers_script" label="Stickers script" required />
+    <ColorPickerField
+      name="stickers_bg_color"
+      label='Background color stickers (if you want any flag, select "Another option")'
+      options={[...COLOR_CODES, "Another option (flag)"]}
+      chartImage={cartaUlPlus}
+      chartAlt="Classic color chart"
+    />
+    <TextField name="flag" label="If you chose a flag, indicate which one" />
+  </Step>
+
+  <Fragment slot="stepper"><Stepper /></Fragment>
+</FormShell>
+
+<style>
+  .step-note {
+    margin: 0;
+    font-size: 0.8rem;
+    color: var(--color-text-secondary);
+  }
+</style>
+
+<script>
+  import { initFormWizard } from "../../lib/formulario-wizard";
+
+  initFormWizard({
+    formId: "form-a-medida",
+    steps: ["1", "2", "3"],
+    branches: {
+      "3": {
+        field: "model",
+        targets: {
+          ulplus: "4-ulplus",
+          ultralight: "4-ultralight",
+          classic: "4-classic",
+        },
+      },
+    },
+  });
+</script>

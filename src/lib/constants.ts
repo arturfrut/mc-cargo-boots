@@ -43,9 +43,9 @@ export const FACEBOOK_HANDLE = "mccargoboots";
 // labels/hrefs por idioma — ver docs/specs/010-i18n-region.md.
 
 // Mapeo tipo_ajuste (catalogo.json) → ruta del formulario correspondiente.
-// docs/specs/007-formularios.md, todavía no implementada — el link queda
-// apuntando a la ruta real (404 hasta que exista), mismo criterio que
-// /productos antes de 005-productos-listado.md.
+// docs/specs/007-formularios.md — implementada en src/pages/formulario/*.astro.
+// "a molde/custom" (/formulario/a-medida) no tiene entrada acá porque catalogo.json
+// todavía no tiene ningún modelo con ese tipo_ajuste (ver relevamiento).
 export const FORMULARIO_HREF_BY_TIPO_AJUSTE: Record<string, string> = {
   stock: "/formulario/estandar",
   "semi-custom": "/formulario/semi-custom",

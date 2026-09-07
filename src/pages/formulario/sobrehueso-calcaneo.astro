@@ -1,0 +1,56 @@
+---
+// docs/catalog/formularios-medidas.md §2 / docs/catalog/formularios-relevamiento-custom.md §8.
+// Formulario opcional, no ligado a tipo_ajuste — se ofrece aparte del formulario principal.
+import FormShell from "../../components/formulario/FormShell.astro";
+import Step from "../../components/formulario/Step.astro";
+import Stepper from "../../components/formulario/Stepper.astro";
+import InstructionBlock from "../../components/formulario/InstructionBlock.astro";
+import TextField from "../../components/formulario/TextField.astro";
+import NumberField from "../../components/formulario/NumberField.astro";
+import img1 from "../../assets/formularios/sobrehueso-calcaneo-01.png";
+import img2 from "../../assets/formularios/sobrehueso-calcaneo-02.png";
+---
+
+<FormShell
+  title="Sobrehueso calcáneo (talón)"
+  description="Formulario de toma de medidas para sobrehueso calcáneo — MC Cargo Boots."
+  intro={["Completá este formulario si tenés una calcificación en el hueso calcáneo (talón) que deba tenerse en cuenta al fabricar tu bota."]}
+  formId="form-sobrehueso-calcaneo"
+>
+  <Step id="1" title="Toma de medidas para la ubicación de la calcificación">
+    <InstructionBlock
+      paragraphs={[
+        "1- Marcar el centro de la calcificación (como muestra la foto).",
+        "2- Medir en milímetros desde el piso hasta el centro de la calcificación.",
+      ]}
+      images={[
+        { src: img1, alt: "Marcar el centro de la calcificación" },
+        { src: img2, alt: "Medir en milímetros desde el piso hasta el centro de la calcificación" },
+      ]}
+    />
+    <TextField name="nombre" label="Nombre completo" required />
+    <NumberField
+      name="calcaneo_derecho_mm"
+      label="Pie derecho — altura al centro del sobrehueso"
+      min={0}
+      max={200}
+    />
+    <NumberField
+      name="calcaneo_izquierdo_mm"
+      label="Pie izquierdo — altura al centro del sobrehueso"
+      min={0}
+      max={200}
+    />
+  </Step>
+
+  <Fragment slot="stepper"><Stepper /></Fragment>
+</FormShell>
+
+<script>
+  import { initFormWizard } from "../../lib/formulario-wizard";
+
+  initFormWizard({
+    formId: "form-sobrehueso-calcaneo",
+    steps: ["1"],
+  });
+</script>

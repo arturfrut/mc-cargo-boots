@@ -38,11 +38,18 @@ Todas las rutas se duplican bajo `/en/...` cuando la región es Global (ver `spe
 Proyecto Astro scaffoldeado y con la mayoría de las specs implementadas (estado al 30/08/2026):
 
 - ✅ Implementadas: `001-layout-shell`, `002-hero`, `003-nosotros`, `004-productos-home`,
-  `005-productos-listado`, `006-producto-detalle`, `008-contacto`, `009-galeria-tecnica`,
-  `010-i18n-region` (solo el mecanismo — ver su sección "Estado de implementación": falta traducir
-  el contenido a `/en/...` más allá del Hero).
-- ⏭️ Saltada por ahora, a pedido del cliente: `007-formularios` (hay relevamiento suficiente para
-  Estándar/sobrehueso calcáneo/escafoides; Semi-custom y A-molde siguen bloqueados con 401).
+  `005-productos-listado`, `006-producto-detalle`, `007-formularios`, `008-contacto`,
+  `009-galeria-tecnica`, `010-i18n-region` (solo el mecanismo — ver su sección "Estado de
+  implementación": falta traducir el contenido a `/en/...` más allá del Hero).
+- `007-formularios` (retomada 2026-09-07): el bloqueo que la había hecho saltar (Semi-custom y
+  A-molde/custom con error 401) ya no existe — los 3 formularios principales se relevaron completos
+  en `docs/catalog/formularios-relevamiento-custom.md` y están implementados en
+  `/formulario/estandar`, `/formulario/semi-custom` y `/formulario/a-medida` (este último sin CTA de
+  producto todavía — `catalogo.json` no tiene ningún modelo con `tipo_ajuste` "a molde"), más los 2
+  formularios opcionales de sobrehueso en `/formulario/sobrehueso-calcaneo` y
+  `/formulario/sobrehueso-escafoides`. Sigue sin backend de destino (ADR 0004: solo UI, envío
+  mock/no-op) y falta relevar la página de colores de "Ultra Light stock" del formulario estándar
+  (ver "Pendiente" en el relevamiento).
 
 Varias specs tienen puntos **bloqueantes de contenido** marcados en su sección "Abierto/pendiente"
 (fotos, mail de contacto, videos de YouTube, formularios con 401) — conviene resolverlos con el

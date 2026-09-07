@@ -1,0 +1,103 @@
+---
+// Dropdown de color + imagen de la carta de colores real relevada
+// (docs/catalog/formularios-relevamiento-custom.md §1c/§7d — códigos reales del
+// cliente, no genéricos, ya que ahora hay carta visual para acompañarlos).
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+
+interface Props {
+  name: string;
+  label: string;
+  options: string[];
+  chartImage: ImageMetadata;
+  chartAlt: string;
+  required?: boolean;
+  helpText?: string;
+}
+
+const { name, label, options, chartImage, chartAlt, required = true, helpText } = Astro.props;
+const id = `f-${name}`;
+---
+
+<div class="field">
+  <label for={id}>
+    {label}
+    {required && <span class="req" aria-hidden="true">*</span>}
+  </label>
+  <div class="picker">
+    <select id={id} name={name} required={required}>
+      <option value="" disabled selected>Elige</option>
+      {options.map((opt) => <option value={opt}>{opt}</option>)}
+    </select>
+    <details class="chart">
+      <summary>Ver carta de colores</summary>
+      <Image src={chartImage} alt={chartAlt} widths={[320, 640]} sizes="(min-width: 48rem) 30rem, 90vw" />
+    </details>
+  </div>
+  {helpText && <p class="help">{helpText}</p>}
+</div>
+
+<style>
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  label {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.85rem;
+  }
+
+  .req {
+    color: var(--color-accent);
+    margin-left: 0.15rem;
+  }
+
+  .picker {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  select {
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: 0.9rem;
+    background: var(--color-bg-surface);
+    color: var(--color-text-primary);
+    border: 1px solid var(--divider-strong);
+    border-radius: 0.35rem;
+    padding: 0.65rem 0.75rem;
+  }
+
+  select:focus-visible {
+    outline: none;
+    border-color: var(--color-accent);
+  }
+
+  .chart summary {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.8rem;
+    color: var(--color-accent);
+    cursor: pointer;
+    width: fit-content;
+  }
+
+  .chart :global(img) {
+    margin-top: 0.5rem;
+    width: 100%;
+    max-width: 30rem;
+    height: auto;
+    border: 1px solid var(--divider-subtle);
+    border-radius: 0.35rem;
+  }
+
+  .help {
+    margin: 0;
+    font-size: 0.75rem;
+    color: var(--color-text-secondary);
+  }
+</style>
