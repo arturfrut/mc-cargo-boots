@@ -1,6 +1,7 @@
 ---
 // docs/specs/006-producto-detalle.md
 import Layout from "../../layouts/Layout.astro";
+import EstiloSwitcher from "../../components/EstiloSwitcher.astro";
 import catalogo from "../../../docs/catalog/catalogo.json";
 import {
   FORMULARIO_HREF_BY_TIPO_AJUSTE,
@@ -39,7 +40,13 @@ const formularioHref = FORMULARIO_HREF_BY_TIPO_AJUSTE[modelo.tipo_ajuste] ?? "/f
 ---
 
 <Layout title={modelo.nombre} description={modelo.descripcion}>
-  <article class="detalle">
+  {/*
+    TEMPORAL — docs/specs/006-producto-detalle.md § "Revisión temporal: 3
+    propuestas de estilo". Se borra junto con 2 de los 3 bloques
+    [data-estilo="..."] de abajo una vez que el cliente elija.
+  */}
+  <EstiloSwitcher />
+  <article class="detalle" data-estilo="editorial">
     <div class="detalle-inner">
       <a class="volver" href="/productos">← Todos los modelos</a>
 
@@ -177,6 +184,11 @@ const formularioHref = FORMULARIO_HREF_BY_TIPO_AJUSTE[modelo.tipo_ajuste] ?? "/f
   .detalle-inner {
     max-width: 48rem;
     margin: 0 auto;
+    /* display:flex column para poder reordenar secciones por estilo con
+       `order`, sin duplicar markup — ver overrides [data-estilo="..."]
+       al final de este bloque (revisión temporal, docs/specs/006). */
+    display: flex;
+    flex-direction: column;
   }
 
   .volver {
@@ -395,5 +407,148 @@ const formularioHref = FORMULARIO_HREF_BY_TIPO_AJUSTE[modelo.tipo_ajuste] ?? "/f
   .cta-secondary:hover,
   .cta-secondary:focus-visible {
     background: var(--accent-tint-weak);
+  }
+
+  /* ============================================================
+     TEMPORAL — docs/specs/006-producto-detalle.md § "Revisión
+     temporal: 3 propuestas de estilo". Todo lo de acá para abajo se
+     borra junto con EstiloSwitcher.astro (y el data-estilo="editorial"
+     de arriba) una vez que el cliente elija una de las 3. Mismo
+     markup, solo reordenado/redimensionado por estilo — ver
+     [data-estilo] en el <article> más arriba.
+     ============================================================ */
+
+  /* --- Estilo "tecnico" (Ficha técnica): specs y colores suben en el
+     flujo, en cards con fondo de superficie; más denso. --- */
+  [data-estilo="tecnico"] .detalle-header {
+    order: 1;
+  }
+  [data-estilo="tecnico"] .destacados {
+    order: 2;
+  }
+  [data-estilo="tecnico"] .specs {
+    order: 3;
+  }
+  [data-estilo="tecnico"] .colores {
+    order: 4;
+  }
+  [data-estilo="tecnico"] .galeria {
+    order: 5;
+  }
+  [data-estilo="tecnico"] .descripcion {
+    order: 6;
+  }
+  [data-estilo="tecnico"] .cta-row {
+    order: 7;
+  }
+
+  [data-estilo="tecnico"] .specs,
+  [data-estilo="tecnico"] .colores {
+    margin-top: 1.5rem;
+    padding: 1.25rem 1.25rem 1.5rem;
+    background: var(--color-bg-surface);
+    border: 1px solid var(--divider-subtle);
+    border-radius: 0.5rem;
+  }
+
+  [data-estilo="tecnico"] .specs h2,
+  [data-estilo="tecnico"] .colores h2 {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+
+  [data-estilo="tecnico"] .specs dl {
+    gap: 0.6rem;
+  }
+
+  [data-estilo="tecnico"] .specs dt {
+    font-size: 0.75rem;
+    color: var(--color-text-secondary);
+    font-weight: 500;
+  }
+
+  [data-estilo="tecnico"] .specs dd {
+    font-weight: 600;
+    color: var(--color-text-primary);
+  }
+
+  [data-estilo="tecnico"] .galeria,
+  [data-estilo="tecnico"] .descripcion {
+    margin-top: 2rem;
+  }
+
+  /* --- Estilo "bold" (Directo): título grande, highlights como
+     badges, barra de CTA fija siempre visible. --- */
+  [data-estilo="bold"] .detalle {
+    padding-bottom: 7rem;
+  }
+
+  [data-estilo="bold"] .detalle-header {
+    order: 1;
+  }
+  [data-estilo="bold"] .galeria {
+    order: 2;
+  }
+  [data-estilo="bold"] .destacados {
+    order: 3;
+  }
+  [data-estilo="bold"] .descripcion {
+    order: 4;
+  }
+  [data-estilo="bold"] .specs {
+    order: 5;
+  }
+  [data-estilo="bold"] .colores {
+    order: 6;
+  }
+  [data-estilo="bold"] .cta-row {
+    order: 7;
+  }
+
+  [data-estilo="bold"] h1 {
+    font-size: clamp(2.4rem, 6vw, 3.4rem);
+    border-bottom: 3px solid var(--color-accent);
+    padding-bottom: 0.5rem;
+    display: inline-block;
+  }
+
+  [data-estilo="bold"] .destacados {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding-left: 0;
+  }
+
+  [data-estilo="bold"] .destacados li {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--color-accent);
+    border: 1px solid var(--color-accent);
+    border-radius: 999px;
+    padding: 0.35rem 0.85rem;
+    margin: 0;
+  }
+
+  [data-estilo="bold"] .cta-row {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: 0;
+    z-index: 30;
+    justify-content: center;
+    background: var(--color-bg-primary);
+    padding: 1rem 1.25rem;
+    border-top: 1px solid var(--divider-subtle);
+  }
+
+  [data-estilo="bold"] .cta-primary {
+    background: var(--color-accent);
   }
 </style>

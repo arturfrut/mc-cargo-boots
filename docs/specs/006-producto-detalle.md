@@ -31,3 +31,20 @@ Ficha completa de un modelo, con los dos caminos de compra.
 - Imágenes reales del catálogo dependen del `mc-cargo-imagenes.zip` mencionado en
   `catalog/catalogo.json` (no presente en este repo) — mientras tanto, usar imágenes genéricas de
   stock para maquetar.
+
+## Revisión temporal: 3 propuestas de estilo
+
+En la rama `revision-estilos-detalle` se agregó un selector de pestañas (`EstiloSwitcher.astro`)
+arriba de la ficha, para que el dueño de la marca elija entre 3 tratamientos visuales del mismo
+contenido/datos (mismo HTML, conmutado por `data-estilo` en `.detalle` — ver `[slug].astro`):
+
+1. **Editorial** (default) — el diseño ya implementado: mucho whitespace, tono callado, CTA en fila
+   al final.
+2. **Ficha técnica** — foco en datos: specs/anclaje en cards con fondo de superficie, más arriba en
+   el flujo, tratamiento más denso.
+3. **Directo** — foco en conversión: H1 más grande, highlights como badges, barra de CTA `sticky`
+   siempre visible.
+
+Es un mecanismo **temporal**: una vez que el cliente elige, se borran las 2 variantes de CSS
+descartadas y el `EstiloSwitcher`, y esta sección se saca de la spec — queda un único diseño, como
+estaba pensado originalmente.

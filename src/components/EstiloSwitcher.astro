@@ -1,0 +1,118 @@
+---
+// docs/specs/006-producto-detalle.md § "Revisión temporal: 3 propuestas de
+// estilo". Componente TEMPORAL — se borra junto con el bloque de CSS de las
+// 2 variantes descartadas una vez que el cliente elija. No triplica markup:
+// las 3 propuestas son 3 hojas de estilo distintas conmutadas por
+// data-estilo en el <article class="detalle"> de [slug].astro (ver ese
+// archivo). Patrón de interacción calcado de RegionSelector.astro (vanilla
+// JS, sin frameworks), pero como tablist en vez de listbox.
+const ESTILOS = [
+  { value: "editorial", label: "Editorial" },
+  { value: "tecnico", label: "Ficha técnica" },
+  { value: "bold", label: "Directo" },
+] as const;
+---
+
+<div class="estilo-switcher">
+  <p class="estilo-switcher-nota">
+    Vista de revisión — probá los 3 estilos y elegí el que más te guste.
+  </p>
+  <div class="estilo-switcher-tabs" role="tablist" aria-label="Estilo de esta página">
+    {
+      ESTILOS.map((estilo) => (
+        <button
+          type="button"
+          role="tab"
+          class="estilo-tab"
+          data-estilo-value={estilo.value}
+          aria-selected="false"
+        >
+          {estilo.label}
+        </button>
+      ))
+    }
+  </div>
+</div>
+
+<style>
+  .estilo-switcher {
+    max-width: 48rem;
+    margin: 1.5rem auto 0;
+    padding: 0 1.25rem;
+  }
+
+  .estilo-switcher-nota {
+    margin: 0 0 0.6rem;
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    color: var(--color-text-secondary);
+  }
+
+  .estilo-switcher-tabs {
+    display: inline-flex;
+    gap: 0.4rem;
+    padding: 0.3rem;
+    border: 1px solid var(--divider-strong);
+    border-radius: 999px;
+  }
+
+  .estilo-tab {
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 0.8rem;
+    background: transparent;
+    border: none;
+    border-radius: 999px;
+    color: var(--color-text-secondary);
+    padding: 0.45rem 0.9rem;
+    cursor: pointer;
+  }
+
+  .estilo-tab:hover,
+  .estilo-tab:focus-visible {
+    color: var(--color-text-primary);
+  }
+
+  .estilo-tab[aria-selected="true"] {
+    background: var(--color-accent);
+    color: var(--color-bg-primary);
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    var STORAGE_KEY = "mc-estilo-detalle";
+    var DEFAULT_ESTILO = "editorial";
+
+    function apply(value) {
+      var article = document.querySelector(".detalle");
+      if (article) article.setAttribute("data-estilo", value);
+      document.querySelectorAll(".estilo-tab").forEach(function (btn) {
+        btn.setAttribute("aria-selected", String(btn.dataset.estiloValue === value));
+      });
+    }
+
+    var stored = null;
+    try {
+      stored = localStorage.getItem(STORAGE_KEY);
+    } catch (e) {
+      // localStorage puede no estar disponible (modo privado, etc.) — se
+      // sigue con el default sin romper la página.
+    }
+    apply(stored || DEFAULT_ESTILO);
+
+    document.querySelectorAll(".estilo-tab").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var value = btn.dataset.estiloValue;
+        if (!value) return;
+        try {
+          localStorage.setItem(STORAGE_KEY, value);
+        } catch (e) {
+          // idem arriba — el switcher sigue funcionando en memoria aunque
+          // no persista entre páginas.
+        }
+        apply(value);
+      });
+    });
+  })();
+</script>
