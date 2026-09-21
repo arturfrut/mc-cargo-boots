@@ -26,3 +26,10 @@ Primer impacto visual de la home: imagen grande de marca + CTA directo a WhatsAp
 
 - Imagen final del hero: pedir al cliente foto en alta resolución (la del manual está pensada para
   PDF, no para hero web full-bleed).
+
+## Actualización 21/09/2026 (feedback del cliente)
+
+- Hero con la foto real del cliente (`src/assets/hero/rodes-inicio.jpg`, llegada de carrera en un
+  mundial); se quitó el crédito de foto de stock.
+- **Pendiente**: logo completo MC Cargo (el cliente pregunta si ya lo tenemos: no está en el repo, hay
+  que pedirlo — SVG/PNG oficial). Hoy el logo es un placeholder de texto en `Header.astro`.

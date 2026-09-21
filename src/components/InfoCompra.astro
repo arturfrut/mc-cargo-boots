@@ -1,0 +1,93 @@
+---
+// Cómo comprar: todas las ventas son por WhatsApp. Texto del cliente (mail
+// del 21/09/2026). Sin `sistema`: intro + los 3 tiempos. Con `sistema`: solo
+// el tiempo de ese sistema (ficha de modelo / página de sistema).
+import { SISTEMAS, type Sistema } from "../lib/sistemas";
+
+interface Props {
+  sistema?: Sistema;
+}
+
+const { sistema } = Astro.props;
+---
+
+<aside class="info-compra" aria-label="Cómo comprar">
+  <p class="intro">
+    Todas nuestras ventas son con trato directo y personalizado. Contáctanos por cualquier consulta, sin
+    ningún compromiso.
+  </p>
+  <h3>Tiempos de entrega</h3>
+  {
+    sistema ? (
+      <p class="tiempo">
+        <strong>Botas {sistema.nombre}:</strong> {sistema.tiempoEntrega}
+      </p>
+    ) : (
+      <ul>
+        {SISTEMAS.map((s) => (
+          <li>
+            <strong>Botas {s.nombre}:</strong> {s.tiempoEntrega}
+          </li>
+        ))}
+      </ul>
+    )
+  }
+  <p class="nota">
+    Como nuestros productos son 100% artesanales, los tiempos de entrega, normalmente, son los estipulados
+    pero son aproximados.
+  </p>
+</aside>
+
+<style>
+  .info-compra {
+    margin-top: 2.5rem;
+    padding: 1.25rem 1.5rem;
+    border: 1px solid var(--divider-subtle);
+    border-radius: 0.5rem;
+    background: var(--color-bg-surface);
+  }
+
+  .intro {
+    margin: 0;
+    color: var(--color-text-primary);
+    font-size: 0.95rem;
+  }
+
+  h3 {
+    margin: 1.25rem 0 0.5rem;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--color-text-secondary);
+  }
+
+  ul {
+    margin: 0;
+    padding-left: 1.1rem;
+    color: var(--color-text-secondary);
+    font-size: 0.9rem;
+  }
+
+  li + li {
+    margin-top: 0.35rem;
+  }
+
+  .tiempo {
+    margin: 0;
+    color: var(--color-text-secondary);
+    font-size: 0.9rem;
+  }
+
+  strong {
+    color: var(--color-text-primary);
+    font-weight: 600;
+  }
+
+  .nota {
+    margin: 1rem 0 0;
+    font-size: 0.8rem;
+    color: var(--color-text-secondary);
+  }
+</style>

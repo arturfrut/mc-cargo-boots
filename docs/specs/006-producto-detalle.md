@@ -48,3 +48,10 @@ contenido/datos (mismo HTML, conmutado por `data-estilo` en `.detalle` — ver `
 Es un mecanismo **temporal**: una vez que el cliente elige, se borran las 2 variantes de CSS
 descartadas y el `EstiloSwitcher`, y esta sección se saca de la spec — queda un único diseño, como
 estaba pensado originalmente.
+
+## Actualización 21/09/2026 (feedback del cliente)
+
+- La ficha muestra el tiempo de entrega de su sistema sobre los botones y vuelve a la página del sistema.
+- **Pendiente — colorear la botas** en semi-custom/custom (antes de los botones WhatsApp/formulario): el
+  cliente lo pidió; se posterga. Falta arte de la bota por partes; la carta de colores real ya está
+  relevada en los formularios (`ColorPickerField`, `COLOR_CODES`).

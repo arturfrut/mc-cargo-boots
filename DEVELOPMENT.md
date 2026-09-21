@@ -23,8 +23,8 @@ como ADRs cortos — consultarlos antes de proponer cambiar de stack o hosting.
 | `specs/001-layout-shell.md` | header/footer/nav en todas las páginas |
 | `specs/002-hero.md` | `/` (sección hero) |
 | `specs/003-nosotros.md` | `/` (sección nosotros) |
-| `specs/004-productos-home.md` | `/` (sección `#productos`, 3 destacados) |
-| `specs/005-productos-listado.md` | `/productos` |
+| `specs/004-productos-home.md` | `/` (sección `#productos`, 3 sistemas) |
+| `specs/005-productos-listado.md` | `/productos` (sistemas) y `/productos/sistema/[sistema]` (modelos) |
 | `specs/006-producto-detalle.md` | `/productos/[slug]` |
 | `specs/007-formularios.md` | `/formulario/[tipo]` |
 | `specs/008-contacto.md` | `/` (sección contacto) |

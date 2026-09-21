@@ -24,3 +24,9 @@ Mostrar 3 productos destacados en la home como puerta de entrada al catálogo co
   modelo representativo por línea para mostrar variedad — Ultra Light+ (`ultra-light-plus`, tope de
   gama), Classic Stock (`classic-stock`, gama alta profesional) y Núcleo o F4 (gama media/iniciación)
   — en vez de mostrar 3 variantes de la misma línea Ultra Light.
+
+## Actualización 21/09/2026 (feedback del cliente)
+
+La sección ya no muestra 3 modelos: muestra los 3 **sistemas** (Standard, Semi-custom, Custom), cada
+uno lleva a `/productos/sistema/[sistema]`. Fuente: `src/lib/sistemas.ts`. Descripciones placeholder;
+las redacta el cliente.

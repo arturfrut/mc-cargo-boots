@@ -2,6 +2,8 @@
 // docs/specs/006-producto-detalle.md
 import Layout from "../../layouts/Layout.astro";
 import EstiloSwitcher from "../../components/EstiloSwitcher.astro";
+import InfoCompra from "../../components/InfoCompra.astro";
+import { sistemaDeModelo } from "../../lib/sistemas";
 import catalogo from "../../../docs/catalog/catalogo.json";
 import {
   FORMULARIO_HREF_BY_TIPO_AJUSTE,
@@ -37,6 +39,7 @@ const colores = esPaletaPersonalizable
   : modelo.specs.colores;
 
 const formularioHref = FORMULARIO_HREF_BY_TIPO_AJUSTE[modelo.tipo_ajuste] ?? "/formulario/estandar";
+const sistema = sistemaDeModelo(modelo.tipo_ajuste);
 ---
 
 <Layout title={modelo.nombre} description={modelo.descripcion}>
@@ -48,7 +51,9 @@ const formularioHref = FORMULARIO_HREF_BY_TIPO_AJUSTE[modelo.tipo_ajuste] ?? "/f
   <EstiloSwitcher />
   <article class="detalle" data-estilo="editorial">
     <div class="detalle-inner">
-      <a class="volver" href="/productos">← Todos los modelos</a>
+      <a class="volver" href={sistema ? `/productos/sistema/${sistema.id}` : "/productos"}>
+        ← {sistema ? `Sistema ${sistema.nombre}` : "Todos los modelos"}
+      </a>
 
       <header class="detalle-header">
         <p class="linea">{modelo.linea}</p>
@@ -157,6 +162,12 @@ const formularioHref = FORMULARIO_HREF_BY_TIPO_AJUSTE[modelo.tipo_ajuste] ?? "/f
           {colores.map((color) => <li>{color}</li>)}
         </ul>
       </section>
+
+      {sistema && (
+        <div class="compra">
+          <InfoCompra sistema={sistema} />
+        </div>
+      )}
 
       <div class="cta-row">
         <a
@@ -438,8 +449,11 @@ const formularioHref = FORMULARIO_HREF_BY_TIPO_AJUSTE[modelo.tipo_ajuste] ?? "/f
   [data-estilo="tecnico"] .descripcion {
     order: 6;
   }
-  [data-estilo="tecnico"] .cta-row {
+  [data-estilo="tecnico"] .compra {
     order: 7;
+  }
+  [data-estilo="tecnico"] .cta-row {
+    order: 8;
   }
 
   [data-estilo="tecnico"] .specs,
@@ -505,8 +519,11 @@ const formularioHref = FORMULARIO_HREF_BY_TIPO_AJUSTE[modelo.tipo_ajuste] ?? "/f
   [data-estilo="bold"] .colores {
     order: 6;
   }
-  [data-estilo="bold"] .cta-row {
+  [data-estilo="bold"] .compra {
     order: 7;
+  }
+  [data-estilo="bold"] .cta-row {
+    order: 8;
   }
 
   [data-estilo="bold"] h1 {

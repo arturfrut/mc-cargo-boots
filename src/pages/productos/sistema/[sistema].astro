@@ -1,0 +1,175 @@
+---
+// docs/specs/005-productos-listado.md — página de un sistema: descripción
+// general + modelos que entran en él.
+import Layout from "../../../layouts/Layout.astro";
+import InfoCompra from "../../../components/InfoCompra.astro";
+import { SISTEMAS, modelosDeSistema } from "../../../lib/sistemas";
+import { whatsappProductHref, whatsappProductMessage } from "../../../lib/constants";
+
+export function getStaticPaths() {
+  return SISTEMAS.map((sistema) => ({
+    params: { sistema: sistema.id },
+    props: { sistema },
+  }));
+}
+
+const { sistema } = Astro.props;
+const modelos = modelosDeSistema(sistema);
+---
+
+<Layout title={`Sistema ${sistema.nombre}`} description={sistema.descripcion}>
+  <section class="sistema">
+    <div class="sistema-inner">
+      <a class="volver" href="/productos">← Sistemas</a>
+      <h1>{sistema.nombre}</h1>
+      <p class="descripcion">{sistema.descripcion}</p>
+
+      <div class="grid">
+        {
+          modelos.map((modelo) => (
+            <a class="card" href={`/productos/${modelo.id}`}>
+              <div class="card-media">
+                {/* Placeholder: fotos reales pendientes de mc-cargo-imagenes.zip */}
+                <span>Foto pendiente</span>
+              </div>
+              <p class="card-gama">{modelo.gama}</p>
+              <h2>{modelo.nombre}</h2>
+            </a>
+          ))
+        }
+        {
+          sistema.modelosPendientes.map((nombre) => (
+            <div class="card card-pendiente">
+              <div class="card-media">
+                <span>Foto pendiente</span>
+              </div>
+              <p class="card-gama">Ficha en preparación</p>
+              <h2>{nombre}</h2>
+              <a
+                class="card-cta"
+                href={whatsappProductHref(nombre)}
+                data-whatsapp-msg={whatsappProductMessage(nombre)}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Consultar por WhatsApp
+              </a>
+            </div>
+          ))
+        }
+      </div>
+
+      <InfoCompra sistema={sistema} />
+
+      <a class="formulario-link" href={sistema.formularioHref}>Completar formulario de medidas</a>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .sistema {
+    padding: 3.5rem 1.25rem 5rem;
+  }
+
+  .sistema-inner {
+    max-width: 75rem;
+    margin: 0 auto;
+  }
+
+  .volver {
+    display: inline-block;
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    margin-bottom: 1rem;
+  }
+
+  .volver:hover,
+  .volver:focus-visible {
+    color: var(--color-accent);
+  }
+
+  .descripcion {
+    margin-top: 0.75rem;
+    max-width: 42rem;
+    color: var(--color-text-secondary);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+  }
+
+  .card {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: var(--color-text-primary);
+    border: 1px solid var(--accent-border);
+    border-radius: 0.5rem;
+    padding: 1.25rem;
+  }
+
+  .card-media {
+    aspect-ratio: 4 / 3;
+    border: 1px dashed var(--divider-placeholder);
+    border-radius: 0.35rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-bg-surface);
+  }
+
+  .card-media span {
+    font-size: 0.75rem;
+    color: var(--color-text-secondary);
+  }
+
+  .card-gama {
+    margin: 1rem 0 0;
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--color-text-secondary);
+  }
+
+  .card h2 {
+    margin: 0.35rem 0 0;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 1.1rem;
+  }
+
+  .card-cta {
+    margin-top: 1rem;
+    align-self: flex-start;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--color-accent);
+    text-decoration: none;
+    border-bottom: 1px solid var(--color-accent);
+  }
+
+  .formulario-link {
+    display: inline-block;
+    margin-top: 2rem;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--color-accent);
+    border: 1px solid var(--color-accent);
+    border-radius: 999px;
+    padding: 0.75rem 1.5rem;
+    text-decoration: none;
+  }
+
+  .formulario-link:hover,
+  .formulario-link:focus-visible {
+    background: var(--accent-tint-weak);
+  }
+</style>
