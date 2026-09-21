@@ -1,0 +1,80 @@
+---
+// Bloque de instrucciones de medición (texto + fotos explicativas), reusado en
+// estándar/semi-custom/a-medida y en los formularios de sobrehueso.
+// Copy literal de docs/catalog/formularios-medidas.md / formularios-relevamiento-custom.md.
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+
+interface Props {
+  title?: string;
+  paragraphs: string[];
+  images?: { src: ImageMetadata; alt: string }[];
+}
+
+const { title, paragraphs, images = [] } = Astro.props;
+---
+
+<div class="instructions">
+  {title && <h3>{title}</h3>}
+  {paragraphs.map((p) => <p>{p}</p>)}
+  {
+    images.length > 0 && (
+      <div class="images">
+        {images.map((img) => (
+          <div class="image-item">
+            <Image src={img.src} alt={img.alt} widths={[240, 480]} sizes="(min-width: 48rem) 14rem, 45vw" />
+          </div>
+        ))}
+      </div>
+    )
+  }
+</div>
+
+<style>
+  .instructions {
+    background: var(--color-bg-surface);
+    border: 1px solid var(--divider-subtle);
+    border-radius: 0.5rem;
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  h3 {
+    font-family: var(--font-h2);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 0.02em;
+    margin: 0;
+  }
+
+  p {
+    margin: 0;
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+    white-space: pre-line;
+  }
+
+  .images {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 0.4rem;
+  }
+
+  .image-item {
+    flex: 0 0 auto;
+    border: 1px solid var(--divider-subtle);
+    border-radius: 0.35rem;
+    overflow: hidden;
+    max-width: 14rem;
+  }
+
+  .image-item :global(img) {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+</style>

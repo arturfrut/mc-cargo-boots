@@ -1,0 +1,88 @@
+---
+// Campo de medida en mm. docs/specs/007-formularios.md: input number + sufijo "mm",
+// rango razonable (~180-330 para largo de pie), texto de ayuda literal del original.
+interface Props {
+  name: string;
+  label: string;
+  required?: boolean;
+  min?: number;
+  max?: number;
+  unit?: string;
+  helpText?: string;
+}
+
+const { name, label, required = true, min, max, unit = "mm", helpText } = Astro.props;
+const id = `f-${name}`;
+---
+
+<div class="field">
+  <label for={id}>
+    {label}
+    {required && <span class="req" aria-hidden="true">*</span>}
+  </label>
+  <div class="input-unit">
+    <input id={id} name={name} type="number" inputmode="numeric" required={required} min={min} max={max} step="1" />
+    <span class="unit" aria-hidden="true">{unit}</span>
+  </div>
+  {helpText && <p class="help">{helpText}</p>}
+</div>
+
+<style>
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  label {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.85rem;
+  }
+
+  .req {
+    color: var(--color-accent);
+    margin-left: 0.15rem;
+  }
+
+  .input-unit {
+    display: flex;
+    align-items: center;
+    background: var(--color-bg-surface);
+    border: 1px solid var(--divider-strong);
+    border-radius: 0.35rem;
+    padding-right: 0.75rem;
+  }
+
+  .input-unit:focus-within {
+    border-color: var(--color-accent);
+  }
+
+  input {
+    flex: 1;
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: 0.9rem;
+    background: transparent;
+    color: var(--color-text-primary);
+    border: none;
+    padding: 0.65rem 0.75rem;
+  }
+
+  input:focus-visible {
+    outline: none;
+  }
+
+  .unit {
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 0.8rem;
+    color: var(--color-text-secondary);
+  }
+
+  .help {
+    margin: 0;
+    font-size: 0.75rem;
+    color: var(--color-text-secondary);
+  }
+</style>

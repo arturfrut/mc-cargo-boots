@@ -1,0 +1,214 @@
+---
+// docs/catalog/formularios-medidas.md §1 (página 1) +
+// docs/catalog/formularios-relevamiento-custom.md §2-§6 (páginas 2-3, relevado 2026-09-06).
+// tipo_ajuste "stock" en catalogo.json → src/lib/constants.ts FORMULARIO_HREF_BY_TIPO_AJUSTE.
+import FormShell from "../../components/formulario/FormShell.astro";
+import Step from "../../components/formulario/Step.astro";
+import Stepper from "../../components/formulario/Stepper.astro";
+import InstructionBlock from "../../components/formulario/InstructionBlock.astro";
+import TextField from "../../components/formulario/TextField.astro";
+import NumberField from "../../components/formulario/NumberField.astro";
+import RadioGroup from "../../components/formulario/RadioGroup.astro";
+import ModelPicker from "../../components/formulario/ModelPicker.astro";
+
+import largo1 from "../../assets/formularios/semicustom-largo-01.png";
+import largo2 from "../../assets/formularios/semicustom-largo-02.png";
+import ancho1 from "../../assets/formularios/semicustom-ancho-01.png";
+import ancho2 from "../../assets/formularios/semicustom-ancho-02.png";
+import instr1 from "../../assets/formularios/semicustom-instrumento-01.png";
+import instr2 from "../../assets/formularios/semicustom-instrumento-02.png";
+import modeloV3 from "../../assets/formularios/estandar-modelo-v3.png";
+import modeloF4 from "../../assets/formularios/estandar-modelo-f4.png";
+import modeloNucleo from "../../assets/formularios/estandar-modelo-nucleo.png";
+import modeloClassic from "../../assets/formularios/estandar-modelo-classic.png";
+import modeloUltraLight from "../../assets/formularios/estandar-modelo-ultralight.png";
+import f4Colores from "../../assets/formularios/estandar-f4-colores.png";
+
+const relatedForms = [
+  { href: "/formulario/sobrehueso-calcaneo", label: "sobrehueso calcáneo" },
+  { href: "/formulario/sobrehueso-escafoides", label: "sobrehueso escafoides" },
+];
+
+const V3_COLORS = [
+  "Base negra con rosa",
+  "Base negra con azul",
+  "Base negra con blanco",
+  "Toda negra",
+  "Base blanca con rosa",
+  "Base blanca con azul",
+  "Base blanca con negro",
+  "Toda blanca",
+];
+
+const F4_COLORS = ["Base azul con blanco", "Base rosa con blanco", "Negra con talón blanco"];
+---
+
+<FormShell
+  title="Formulario de botas estándar"
+  description="Formulario de toma de medidas para botas estándar — MC Cargo Boots."
+  intro={[
+    "Nuestras botas estándar se destacan por mantenerse en la elite del mercado por más de 25 años. El motivo de esto se debe a no renunciar a una búsqueda continua de llegar a la más alta calidad, realizando un producto de excelencia totalmente en Argentina.",
+  ]}
+  formId="form-estandar"
+  relatedForms={relatedForms}
+>
+  <Step id="1" title="Datos y medidas">
+    <InstructionBlock
+      title="Medidas de largo máximo del pie"
+      paragraphs={[
+        "1- Apoyar levemente (sin empujar) el talón en el zócalo de la pared.",
+        "2- Trasladar la medida del dedo más largo con una regla de 90° al piso y marcar con un lápiz.",
+        "3- Tomar la medida del zócalo a la marca.",
+      ]}
+      images={[
+        { src: largo1, alt: "Medir largo del pie contra el zócalo de la pared" },
+        { src: largo2, alt: "Trasladar la medida del dedo más largo" },
+      ]}
+    />
+    <InstructionBlock
+      title="Medidas ancho máximo del pie (del 1° al 5° metatarso)"
+      paragraphs={[
+        "1- Apoyar el lateral externo del pie en el zócalo de la pared (la zona más ancha, 5° metatarso/juanete externo), prestando atención que el pie quede perpendicular a la pared.",
+        "2- Trasladar la medida del 1° metatarso (juanete interior) con una regla de 90° al piso y marcar con un lápiz.",
+        "3- Tomar la medida del zócalo a la marca.",
+      ]}
+      images={[
+        { src: ancho1, alt: "Medir ancho máximo del pie" },
+        { src: ancho2, alt: "Trasladar la medida del 1° metatarso" },
+      ]}
+    />
+    <InstructionBlock
+      title="Instrumento de medición"
+      paragraphs={["Usar regla, cinta métrica o centímetro en la cual comience desde el cero (prestar atención que no esté separado)."]}
+      images={[
+        { src: instr1, alt: "Ejemplo de instrumento de medición" },
+        { src: instr2, alt: "Otro instrumento de medición válido" },
+      ]}
+    />
+
+    <TextField name="nombre" label="Nombre completo" required />
+    <NumberField name="largo_derecho_mm" label='Medida "exacta" de largo — Derecho' min={180} max={330} helpText="Medida exacta, sin agregar ni quitar milímetros." />
+    <NumberField name="largo_izquierdo_mm" label='Medida "exacta" de largo — Izquierdo' min={180} max={330} helpText="Medida exacta, sin agregar ni quitar milímetros." />
+    <NumberField name="ancho_derecho_mm" label='Medida "exacta" de ancho máximo — Derecho' min={60} max={140} helpText="Medida exacta, sin agregar ni quitar milímetros." />
+    <NumberField name="ancho_izquierdo_mm" label='Medida "exacta" de ancho máximo — Izquierdo' min={60} max={140} helpText="Medida exacta, sin agregar ni quitar milímetros." />
+    <NumberField name="edad" label="Edad" unit="años" min={1} max={110} />
+    <RadioGroup name="sexo" legend="Sexo" options={[{ value: "M", label: "Masculino" }, { value: "F", label: "Femenino" }]} />
+    <TextField name="direccion" label="Dirección completa" required />
+    <TextField name="localidad" label="Localidad" required />
+    <TextField name="provincia" label="Provincia / Estado" required />
+    <TextField name="pais" label="País" required />
+    <TextField name="red_social" label="Red social por donde se contacta y usuario" required />
+    <RadioGroup name="uso" legend="Uso" options={[{ value: "recreativo", label: "Recreativo/Fitness" }, { value: "competicion", label: "Competición" }]} />
+    <NumberField name="anios_patinando" label="Cantidad de años en el patinaje" unit="años" min={0} max={80} />
+    <TextField name="bota_en_uso" label="Bota en uso (marca, modelo, de competición o rollers/fitness)" required />
+    <TextField name="talle_bota" label="Talle de bota en uso" required />
+    <TextField name="talle_calzado" label="Talle de calzado tradicional" required />
+    <RadioGroup
+      name="contextura"
+      legend="Contextura del pie"
+      options={[{ value: "fina", label: "Fina" }, { value: "mediana", label: "Mediana" }, { value: "grande", label: "Grande" }]}
+    />
+  </Step>
+
+  <Step id="2" title="Modelos de botas">
+    <p class="step-note">Estos son los modelos que tenemos disponibles para las botas estándar (stock):</p>
+    <ModelPicker
+      name="modelo"
+      legend="Modelo elegido"
+      options={[
+        {
+          value: "v3",
+          label: "V3",
+          description: "Ideal como primera bota profesional de competición. Altura media a alta y excelente soporte de tobillo. Cierre final con velcro.",
+          image: modeloV3,
+        },
+        {
+          value: "f4",
+          label: "F4",
+          description: "Ideal como primera bota profesional de competición. Alta calidad en refuerzos internos. Cierre final con hebilla.",
+          image: modeloF4,
+        },
+        {
+          value: "nucleo",
+          label: "Núcleo (negra)",
+          description: "Bota gama media. Ajuste para técnica alta. Ideal para patinadores en etapa de experticia.",
+          image: modeloNucleo,
+        },
+        {
+          value: "classic-stock",
+          label: "Classic stock",
+          description: "Bota gama alta. Ajuste profesional. Ideal para patinadores top.",
+          image: modeloClassic,
+        },
+        {
+          value: "ultralight-stock",
+          label: "Ultra Light stock",
+          description: "Bota ultra liviana de alta gama, con estructuras de carbono en la suela. Única bota con tecnología Ultra Light del mercado.",
+          image: modeloUltraLight,
+        },
+      ]}
+    />
+  </Step>
+
+  <Step id="3-v3" title="Colores — V3">
+    <RadioGroup
+      name="colores_v3"
+      legend="Colores elegidos"
+      required={false}
+      options={V3_COLORS.map((c) => ({ value: c, label: c }))}
+    />
+  </Step>
+
+  <Step id="3-f4" title="Colores — F4">
+    <InstructionBlock images={[{ src: f4Colores, alt: "Las 3 combinaciones de color disponibles para F4" }]} paragraphs={[]} />
+    <RadioGroup
+      name="colores_f4"
+      legend="Colores elegidos"
+      required={false}
+      options={F4_COLORS.map((c) => ({ value: c, label: c }))}
+    />
+  </Step>
+
+  <Step id="3-ultralight-pendiente" title="Colores — Ultra Light stock">
+    <p class="step-note">
+      Esta pantalla todavía está pendiente de relevar con el cliente (ver
+      <code>docs/catalog/formularios-relevamiento-custom.md</code>). Por ahora podés continuar y te
+      contactamos para definir el color directamente.
+    </p>
+  </Step>
+
+  <Fragment slot="stepper"><Stepper /></Fragment>
+</FormShell>
+
+<style>
+  .step-note {
+    margin: 0;
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+  }
+
+  .step-note code {
+    font-size: 0.8em;
+  }
+</style>
+
+<script>
+  import { initFormWizard } from "../../lib/formulario-wizard";
+
+  initFormWizard({
+    formId: "form-estandar",
+    steps: ["1", "2"],
+    branches: {
+      "2": {
+        field: "modelo",
+        targets: {
+          v3: "3-v3",
+          f4: "3-f4",
+          "ultralight-stock": "3-ultralight-pendiente",
+          // "nucleo" y "classic-stock" no tienen página de color en el original
+          // (van directo a "Enviar" — ver §5/§6 del relevamiento).
+        },
+      },
+    },
+  });
+</script>

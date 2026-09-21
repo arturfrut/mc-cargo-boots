@@ -1,0 +1,76 @@
+---
+// Campo de texto corto/largo genérico. docs/specs/007-formularios.md.
+interface Props {
+  name: string;
+  label: string;
+  required?: boolean;
+  multiline?: boolean;
+  helpText?: string;
+  placeholder?: string;
+}
+
+const { name, label, required = false, multiline = false, helpText, placeholder } = Astro.props;
+const id = `f-${name}`;
+---
+
+<div class="field">
+  <label for={id}>
+    {label}
+    {required && <span class="req" aria-hidden="true">*</span>}
+  </label>
+  {
+    multiline ? (
+      <textarea id={id} name={name} required={required} placeholder={placeholder} rows={3} />
+    ) : (
+      <input id={id} name={name} type="text" required={required} placeholder={placeholder} />
+    )
+  }
+  {helpText && <p class="help">{helpText}</p>}
+</div>
+
+<style>
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  label {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.85rem;
+  }
+
+  .req {
+    color: var(--color-accent);
+    margin-left: 0.15rem;
+  }
+
+  input,
+  textarea {
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: 0.9rem;
+    background: var(--color-bg-surface);
+    color: var(--color-text-primary);
+    border: 1px solid var(--divider-strong);
+    border-radius: 0.35rem;
+    padding: 0.65rem 0.75rem;
+  }
+
+  textarea {
+    resize: vertical;
+  }
+
+  input:focus-visible,
+  textarea:focus-visible {
+    outline: none;
+    border-color: var(--color-accent);
+  }
+
+  .help {
+    margin: 0;
+    font-size: 0.75rem;
+    color: var(--color-text-secondary);
+  }
+</style>

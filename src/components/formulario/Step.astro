@@ -1,0 +1,41 @@
+---
+// Un paso del wizard. `id` debe coincidir con el StepId usado en la config
+// pasada a initFormWizard() (src/lib/formulario-wizard.ts).
+interface Props {
+  id: string;
+  title: string;
+}
+
+const { id, title } = Astro.props;
+---
+
+<section data-step={id} hidden>
+  <h2>{title}</h2>
+  <div class="step-fields">
+    <slot />
+  </div>
+</section>
+
+<style>
+  /* [hidden] tiene que ganarle a este display (los estilos de autor pisan el
+     `display: none` del user-agent stylesheet salvo que se lo repita acá). */
+  section {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  section[hidden] {
+    display: none;
+  }
+
+  h2 {
+    font-size: 1.1rem;
+  }
+
+  .step-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+</style>

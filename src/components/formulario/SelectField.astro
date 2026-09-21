@@ -1,0 +1,67 @@
+---
+// Dropdown genérico (usado standalone y como base de ColorPickerField).
+interface Props {
+  name: string;
+  label: string;
+  options: string[];
+  required?: boolean;
+  placeholder?: string;
+  helpText?: string;
+}
+
+const { name, label, options, required = true, placeholder = "Elige", helpText } = Astro.props;
+const id = `f-${name}`;
+---
+
+<div class="field">
+  <label for={id}>
+    {label}
+    {required && <span class="req" aria-hidden="true">*</span>}
+  </label>
+  <select id={id} name={name} required={required}>
+    <option value="" disabled selected>{placeholder}</option>
+    {options.map((opt) => <option value={opt}>{opt}</option>)}
+  </select>
+  {helpText && <p class="help">{helpText}</p>}
+</div>
+
+<style>
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  label {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.85rem;
+  }
+
+  .req {
+    color: var(--color-accent);
+    margin-left: 0.15rem;
+  }
+
+  select {
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: 0.9rem;
+    background: var(--color-bg-surface);
+    color: var(--color-text-primary);
+    border: 1px solid var(--divider-strong);
+    border-radius: 0.35rem;
+    padding: 0.65rem 0.75rem;
+  }
+
+  select:focus-visible {
+    outline: none;
+    border-color: var(--color-accent);
+  }
+
+  .help {
+    margin: 0;
+    font-size: 0.75rem;
+    color: var(--color-text-secondary);
+  }
+</style>

@@ -1,0 +1,78 @@
+---
+// docs/catalog/formularios-medidas.md §3 / docs/catalog/formularios-relevamiento-custom.md §9.
+import FormShell from "../../components/formulario/FormShell.astro";
+import Step from "../../components/formulario/Step.astro";
+import Stepper from "../../components/formulario/Stepper.astro";
+import InstructionBlock from "../../components/formulario/InstructionBlock.astro";
+import TextField from "../../components/formulario/TextField.astro";
+import NumberField from "../../components/formulario/NumberField.astro";
+import img1 from "../../assets/formularios/sobrehueso-escafoides-01.png";
+import img2 from "../../assets/formularios/sobrehueso-escafoides-02.png";
+import img3 from "../../assets/formularios/sobrehueso-escafoides-03.png";
+---
+
+<FormShell
+  title="Sobrehueso escafoides"
+  description="Formulario de toma de medidas para sobrehueso escafoides — MC Cargo Boots."
+  intro={["Completá este formulario si tenés una calcificación en el hueso escafoides que deba tenerse en cuenta al fabricar tu bota."]}
+  formId="form-sobrehueso-escafoides"
+>
+  <Step id="1" title="Toma de medidas para la ubicación de la calcificación">
+    <InstructionBlock
+      paragraphs={[
+        "1- Marcar el centro de la calcificación (como muestra la foto superior).",
+        "2- Apoyar el talón en el zócalo de la pared.",
+        "3- Medir en milímetros desde la pared hasta el centro de la calcificación para el eje \"X\".",
+        "4- Medir en milímetros desde el piso hasta el centro de la calcificación para el eje \"Y\".",
+        "5- Detallar medidas del eje \"X\" y del eje \"Y\".",
+      ]}
+      images={[
+        { src: img1, alt: "Marcar el centro de la calcificación, apoyar el talón en el zócalo" },
+        { src: img2, alt: "Medir eje X desde la pared" },
+        { src: img3, alt: "Medir eje Y desde el piso" },
+      ]}
+    />
+    <TextField name="nombre" label="Nombre completo" required />
+
+    <fieldset class="pie">
+      <legend>Pie derecho</legend>
+      <NumberField name="escafoides_derecho_x_mm" label='Medida eje "X"' min={0} max={200} />
+      <NumberField name="escafoides_derecho_y_mm" label='Medida eje "Y"' min={0} max={200} />
+    </fieldset>
+
+    <fieldset class="pie">
+      <legend>Pie izquierdo</legend>
+      <NumberField name="escafoides_izquierdo_x_mm" label='Medida eje "X"' min={0} max={200} />
+      <NumberField name="escafoides_izquierdo_y_mm" label='Medida eje "Y"' min={0} max={200} />
+    </fieldset>
+  </Step>
+
+  <Fragment slot="stepper"><Stepper /></Fragment>
+</FormShell>
+
+<style>
+  .pie {
+    border: 1px solid var(--divider-subtle);
+    border-radius: 0.5rem;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .pie legend {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.85rem;
+    padding: 0 0.35rem;
+  }
+</style>
+
+<script>
+  import { initFormWizard } from "../../lib/formulario-wizard";
+
+  initFormWizard({
+    formId: "form-sobrehueso-escafoides",
+    steps: ["1"],
+  });
+</script>
