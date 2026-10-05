@@ -59,10 +59,6 @@ export type StockCredit = { author: string; license: string };
 
 export const STOCK_CREDITS: Record<string, StockCredit> = {
   "hero-youth-olympics-buenosaires": { author: "Marcus Cyron", license: "CC BY-SA 3.0" },
-  "nosotros-berlin-marathon": { author: "Thomas Angermann", license: "CC BY-SA 2.0" },
-  "nosotros-berlin-2017": { author: "Gnangarra", license: "CC BY 2.5 AU" },
-  "nosotros-ludwigsfelde-2005": { author: "Trash:Pet", license: "CC BY-SA 3.0" },
-  "nosotros-boys-final-42": { author: "Marcus Cyron", license: "CC BY-SA 3.0" },
   "producto-girls-semifinal-43": { author: "Marcus Cyron", license: "CC BY-SA 3.0" },
   "producto-girls-029": { author: "Marcus Cyron", license: "CC BY-SA 3.0" },
   "producto-boys-victory-71": { author: "Marcus Cyron", license: "CC BY-SA 3.0" },

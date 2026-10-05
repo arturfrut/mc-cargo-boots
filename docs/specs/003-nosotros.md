@@ -13,9 +13,10 @@ Texto base (de `brand/brand-guide.md` §1 y `manual-de-marca.pdf` pág. 2):
 - Diferencial: combinación de conocimiento técnico-mecánico + experiencia deportiva competitiva.
 - Valores: técnica, personalización, seriedad, transparencia, artesanía.
 - Compromiso: servicio impecable, pasión por el deporte.
-- Carrusel de fotos: usar las fotos reales de competición/podios ya relevadas en
-  `manual-de-marca.pdf` pág. 9 (grid de Instagram) como referencia de qué tipo de imagen buscar —
-  pedir al cliente el set completo en alta resolución para el carrusel.
+- Carrusel de fotos: set final entregado por el cliente 2026-10 (6 fotos, `src/assets/nosotros/`) —
+  horma de molde de yeso (trabajo artesanal) + 4 fotos de patinadores en competición + collage del
+  equipo trabajando en el taller (al final). Reemplaza el stock temporal de Wikimedia Commons que
+  había antes.
 
 ## Reglas de marca aplicables
 
@@ -24,5 +25,4 @@ Texto base (de `brand/brand-guide.md` §1 y `manual-de-marca.pdf` pág. 2):
 
 ## Abierto / pendiente
 
-- Confirmar con el cliente el set final de fotos del carrusel (las del manual son de redes sociales,
-  puede haber mejores en alta resolución).
+Sin pendientes — set de fotos del carrusel resuelto (ver "Contenido / datos" arriba).

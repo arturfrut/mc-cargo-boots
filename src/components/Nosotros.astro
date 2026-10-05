@@ -1,23 +1,24 @@
 ---
 // docs/specs/003-nosotros.md
 import { Image } from "astro:assets";
-import { stockCreditLabel } from "../lib/constants";
-import berlinMarathon from "../assets/stock/nosotros-berlin-marathon.jpg";
-import berlin2017 from "../assets/stock/nosotros-berlin-2017.jpg";
-import ludwigsfelde2005 from "../assets/stock/nosotros-ludwigsfelde-2005.jpg";
-import boysFinal42 from "../assets/stock/nosotros-boys-final-42.jpg";
+import hormaMolde from "../assets/nosotros/horma-molde-yeso.jpg";
+import patinadoraPodio from "../assets/nosotros/patinadora-podio-pista.jpg";
+import llegadaBerlin from "../assets/nosotros/llegada-maraton-berlin.jpg";
+import patinadorBelgica from "../assets/nosotros/patinador-belgica-ruta.jpg";
+import patinadorColombia from "../assets/nosotros/patinador-colombia-pista.jpg";
+import collageTaller from "../assets/nosotros/collage-taller.jpg";
 
 const valores = ["Técnica", "Personalización", "Seriedad", "Transparencia", "Artesanía"];
 
-// Fotos de stock temporales (no son de MC Cargo) — el carrusel real usa fotos
-// en alta resolución que el cliente todavía no entregó (ver
-// "Abierto/pendiente" de la spec). Créditos completos en
-// docs/credits/fotos-stock.md.
+// Set final de fotos entregado por el cliente (reemplaza el stock temporal
+// que había antes) — ver "Abierto/pendiente" de la spec, ahora resuelto.
 const carousel = [
-  { img: berlinMarathon, credit: "nosotros-berlin-marathon" as const, alt: "Maratón de patinadores, Berlín 2010" },
-  { img: berlin2017, credit: "nosotros-berlin-2017" as const, alt: "Patinadores de carrera en las calles de Berlín, 2017" },
-  { img: ludwigsfelde2005, credit: "nosotros-ludwigsfelde-2005" as const, alt: "Maratón de patín carrera, Ludwigsfelde 2005" },
-  { img: boysFinal42, credit: "nosotros-boys-final-42" as const, alt: "Final de patín carrera, Juegos Olímpicos de la Juventud 2018" },
+  { img: hormaMolde, alt: "Horma de yeso del molde de un pie, trabajo artesanal de MC Cargo" },
+  { img: patinadoraPodio, alt: "Patinadora festejando en pista cubierta" },
+  { img: llegadaBerlin, alt: "Llegada de dos patinadores en el Maratón de Berlín" },
+  { img: patinadorBelgica, alt: "Patinador con la camiseta de Bélgica festejando en ruta" },
+  { img: patinadorColombia, alt: "Patinador de Colombia señalando en pista" },
+  { img: collageTaller, alt: "Collage del equipo trabajando en el taller: puliendo, armando hormas, cortando materiales" },
 ];
 ---
 
@@ -42,14 +43,13 @@ const carousel = [
       {valores.map((valor) => <li>{valor}</li>)}
     </ul>
 
-    <div class="carousel" role="group" aria-label="Fotos de patín carrera (stock temporal, no son de MC Cargo)">
+    <div class="carousel" role="group" aria-label="Fotos de MC Cargo Boots: taller y patinadores">
       {
         carousel.map((item) => (
           <figure class="carousel-item">
             <div class="carousel-media">
               <Image src={item.img} alt={item.alt} widths={[320, 480, 640]} sizes="(min-width: 48rem) 16rem, 80vw" quality={65} />
             </div>
-            <figcaption>{stockCreditLabel(item.credit)}</figcaption>
           </figure>
         ))
       }
@@ -131,11 +131,5 @@ const carousel = [
     width: 100%;
     height: 100%;
     object-fit: cover;
-  }
-
-  .carousel-item figcaption {
-    margin-top: 0.4rem;
-    font-size: 0.7rem;
-    color: var(--color-text-secondary);
   }
 </style>
