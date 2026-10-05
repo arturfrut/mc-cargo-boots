@@ -3,7 +3,8 @@
 ## Objetivo
 
 Réplica web de los formularios de Google Forms del cliente, uno por tipo de bota, más dos opcionales
-de sobrehueso. Ver ADR 0004: en esta versión, solo UI, sin backend de destino.
+de sobrehueso. Ver ADR 0006: el envío por email (Resend) ya está armado, pendiente de activar con
+el mail de destino del cliente.
 
 ## Contenido / datos
 
@@ -38,5 +39,6 @@ Campos, textos instructivos y validaciones: replicar literalmente lo documentado
   "Restringir a usuarios de [organización]" y/o "Limitar a 1 respuesta" en esos dos formularios para
   poder relevarlos completos (ver `catalog/formularios-medidas.md` §4).
 - Relevar la(s) página(s) 2+ del formulario Estándar.
-- Destino final de los datos enviados (ADR 0004).
+- Mail de destino de los formularios enviados (ADR 0006) — cargar `FORM_DESTINATION_EMAIL` y
+  `RESEND_API_KEY` en Vercel apenas el cliente lo confirme.
 - Fuente de fotos genéricas para reemplazar las instructivas del original.

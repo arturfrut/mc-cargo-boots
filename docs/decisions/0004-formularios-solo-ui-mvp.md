@@ -1,6 +1,8 @@
 # ADR 0004 — Formularios: solo UI en esta versión
 
-**Estado:** aceptado (temporal, revisar cuando el cliente defina destino de datos)
+**Estado:** superseded por [ADR 0006](0006-formularios-envio-email-resend.md) (2026-10) — el cliente
+sigue sin definir el mail de destino, pero ya se dejó armado el envío por email vía Resend, listo
+para activarse apenas lo defina.
 
 ## Contexto
 

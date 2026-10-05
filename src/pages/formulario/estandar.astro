@@ -40,7 +40,13 @@ const V3_COLORS = [
   "Toda blanca",
 ];
 
-const F4_COLORS = ["Base azul con blanco", "Base rosa con blanco", "Negra con talón blanco"];
+const F4_COLORS = [
+  "Azules con tapas y talones blancos",
+  "Fucsias con tapas y talones blancos",
+  "Negras con talón blanco",
+  "Negras con tapas y talones azules",
+  "Negras con tapas y talones fucsias",
+];
 ---
 
 <FormShell
@@ -78,6 +84,11 @@ const F4_COLORS = ["Base azul con blanco", "Base rosa con blanco", "Negra con ta
       ]}
     />
     <InstructionBlock
+      paragraphs={[
+        "Asegúrate de tomar bien la medida del pie de esta manera (Importante: las medidas deben ser exactas, sin agregar ni quitar milímetros).",
+      ]}
+    />
+    <InstructionBlock
       title="Instrumento de medición"
       paragraphs={["Usar regla, cinta métrica o centímetro en la cual comience desde el cero (prestar atención que no esté separado)."]}
       images={[
@@ -98,6 +109,8 @@ const F4_COLORS = ["Base azul con blanco", "Base rosa con blanco", "Negra con ta
     <TextField name="provincia" label="Provincia / Estado" required />
     <TextField name="pais" label="País" required />
     <TextField name="red_social" label="Red social por donde se contacta y usuario" required />
+    <TextField name="celular_whatsapp" label="Número de celular / WhatsApp" required />
+    <TextField name="email" label="Email" required />
     <RadioGroup name="uso" legend="Uso" options={[{ value: "recreativo", label: "Recreativo/Fitness" }, { value: "competicion", label: "Competición" }]} />
     <NumberField name="anios_patinando" label="Cantidad de años en el patinaje" unit="años" min={0} max={80} />
     <TextField name="bota_en_uso" label="Bota en uso (marca, modelo, de competición o rollers/fitness)" required />
@@ -118,7 +131,7 @@ const F4_COLORS = ["Base azul con blanco", "Base rosa con blanco", "Negra con ta
       options={[
         {
           value: "v3",
-          label: "V3",
+          label: "V3 Plus",
           description: "Ideal como primera bota profesional de competición. Altura media a alta y excelente soporte de tobillo. Cierre final con velcro.",
           image: modeloV3,
         },
@@ -150,7 +163,7 @@ const F4_COLORS = ["Base azul con blanco", "Base rosa con blanco", "Negra con ta
     />
   </Step>
 
-  <Step id="3-v3" title="Colores — V3">
+  <Step id="3-v3" title="Colores — V3 Plus">
     <RadioGroup
       name="colores_v3"
       legend="Colores elegidos"
@@ -197,6 +210,7 @@ const F4_COLORS = ["Base azul con blanco", "Base rosa con blanco", "Negra con ta
 
   initFormWizard({
     formId: "form-estandar",
+    formLabel: "Formulario botas estándar",
     steps: ["1", "2"],
     branches: {
       "2": {

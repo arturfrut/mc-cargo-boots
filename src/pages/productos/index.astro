@@ -2,7 +2,6 @@
 // docs/specs/005-productos-listado.md — primero se elige el sistema
 // (Standard / Semi-custom / Custom); los modelos viven en /productos/sistema/[sistema].
 import Layout from "../../layouts/Layout.astro";
-import InfoCompra from "../../components/InfoCompra.astro";
 import { SISTEMAS, modelosDeSistema } from "../../lib/sistemas";
 ---
 
@@ -27,8 +26,6 @@ import { SISTEMAS, modelosDeSistema } from "../../lib/sistemas";
           })
         }
       </div>
-
-      <InfoCompra />
     </div>
   </section>
 </Layout>

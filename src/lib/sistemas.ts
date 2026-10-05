@@ -21,7 +21,7 @@ export interface Sistema {
 export const SISTEMAS: Sistema[] = [
   {
     id: "standard",
-    nombre: "Standard",
+    nombre: "Botas Standard",
     descripcion:
       "Botas de línea con medidas de talle estándar. Elegís modelo, talle y color y las fabricamos artesanalmente para vos. (Texto provisorio: la descripción final la redacta el cliente.)",
     tipoAjuste: "stock",
@@ -31,7 +31,7 @@ export const SISTEMAS: Sistema[] = [
   },
   {
     id: "semi-custom",
-    nombre: "Semi-custom",
+    nombre: "Botas Semi-custom",
     descripcion:
       "Botas con ajuste adaptado a las medidas de tu pie sobre una base de línea, con colores a elección. (Texto provisorio: la descripción final la redacta el cliente.)",
     tipoAjuste: "semi-custom",
@@ -41,7 +41,7 @@ export const SISTEMAS: Sistema[] = [
   },
   {
     id: "custom",
-    nombre: "Custom",
+    nombre: "Botas Custom",
     descripcion:
       "Botas a molde, fabricadas íntegramente sobre la forma de tu pie. (Texto provisorio: la descripción final la redacta el cliente.)",
     tipoAjuste: null,

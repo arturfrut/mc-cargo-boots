@@ -49,11 +49,8 @@ const { title, description, intro = [], formId, relatedForms = [] } = Astro.prop
         <slot name="stepper" />
 
         <div class="confirm-panel" data-wizard-confirm hidden>
-          <h2>Formulario listo</h2>
-          <p>
-            El envío automático todavía no está conectado — por ahora, guardá o enviá esta captura de
-            pantalla mientras definimos con vos el destino final de los datos.
-          </p>
+          <h2 data-wizard-confirm-title>Formulario listo</h2>
+          <p data-wizard-confirm-message>Enviando...</p>
           <pre data-wizard-summary></pre>
         </div>
       </form>

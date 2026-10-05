@@ -9,9 +9,8 @@
     },
     "notas_de_transcripcion": [
       "Datos transcriptos literalmente del catálogo. Se respetó la redacción original en descripciones.",
-      "POSIBLE ERRATA en NÚCLEO: talles declarados 30 al 47, pero el anclaje 195mm figura 'del 35 al 38.5' (en los demás modelos con talle hasta 47 dice 'del 35 al 47'). Verificar con el cliente antes de publicar.",
-      "CLASSIC Semi Custom no declara talles propios; comparte materiales con Classic Stock (talles 32 al 47). Verificar con el cliente.",
-      "Las rutas de 'imagenes' corresponden al zip mc-cargo-imagenes.zip entregado junto a este archivo."
+      "Las rutas de 'imagenes' corresponden al zip mc-cargo-imagenes.zip entregado junto a este archivo.",
+      "Actualizado 2026-10 con cambios de talles/colores confirmados por el cliente (docs/cambios-cliente/2026-10-modificaciones.md) — resuelve las erratas de NÚCLEO y CLASSIC Semi Custom que estaban pendientes de confirmar."
     ]
   },
   "modelos": [
@@ -25,12 +24,11 @@
       "orden_catalogo": 1,
       "specs": {
         "suela": "Fibra de carbono (interior tejido biaxial), epoxy vacuum system, Ultra Light technology",
-        "capellada": "Microfibra",
-        "talles": { "desde": 30, "hasta": 47 },
+        "capellada": "Microfibra, acolchados TSPS, refuerzos termoplásticos TG1 ultra livianos, cierre final con hebilla",
+        "talles": { "desde": 35, "hasta": 47 },
         "anclaje_mm": [
-          { "medida": 165, "talles": "30 al 34.5" },
           { "medida": 195, "talles": "35 al 47" },
-          { "medida": "165 o 195", "talles": "34 al 36.5" }
+          { "medida": "165 o 195", "talles": "35 al 36.5" }
         ],
         "colores": ["Personalizables"]
       },
@@ -59,13 +57,13 @@
       "specs": {
         "suela": "Fibra de carbono (interior tejido biaxial), epoxy vacuum system, Ultra Light technology",
         "capellada": "Microfibra, acolchados TSPS, refuerzos termoplásticos TG1 ultra livianos, cierre final con hebilla",
-        "talles": { "desde": 30, "hasta": 47 },
+        "talles": { "desde": 33, "hasta": 47 },
         "anclaje_mm": [
-          { "medida": 165, "talles": "30 al 34.5" },
+          { "medida": 165, "talles": "33 al 34.5" },
           { "medida": 195, "talles": "35 al 47" },
           { "medida": "165 o 195", "talles": "34 al 36.5" }
         ],
-        "colores": ["Negras con detalles cobre"]
+        "colores": ["Negras con detalles dorados"]
       },
       "descripcion": "Bota ultra liviana de alta gama. Mediante estructuras en la suela de carbono, se logra alivianar y mejorar la rigidez. Con capellada de diseño y refuerzos ultra livianos. Este sistema logra mejor estabilidad, control y mayor transmisión de empuje.",
       "destacados": [
@@ -87,11 +85,11 @@
       "gama": "alta",
       "orden_catalogo": 3,
       "specs": {
-        "suela": "Mismos materiales que Ultra Light Stock",
-        "capellada": "Mismos materiales que Ultra Light Stock",
-        "talles": { "desde": 30, "hasta": 47 },
+        "suela": "Fibra de carbono (interior tejido biaxial), epoxy vacuum system, Ultra Light technology",
+        "capellada": "Microfibra, acolchados TSPS, refuerzos termoplásticos TG1 ultra livianos, cierre final con hebilla",
+        "talles": { "desde": 34, "hasta": 47 },
         "anclaje_mm": [
-          { "medida": 165, "talles": "30 al 34.5" },
+          { "medida": 165, "talles": "34 y 34.5" },
           { "medida": 195, "talles": "35 al 47" },
           { "medida": "165 o 195", "talles": "34 al 36.5" }
         ],
@@ -119,7 +117,7 @@
       "specs": {
         "suela": "Fibra de carbono (interior tejido biaxial), epoxy vacuum system",
         "capellada": "Microfibra, acolchados TSPS, refuerzos termoplásticos TG2. Cierre final con hebilla",
-        "talles": { "desde": 32, "hasta": 47 },
+        "talles": { "desde": 30, "hasta": 47 },
         "anclaje_mm": [
           { "medida": 165, "talles": "30 al 34.5" },
           { "medida": 195, "talles": "35 al 47" },
@@ -146,10 +144,14 @@
       "gama": "alta",
       "orden_catalogo": 5,
       "specs": {
-        "suela": "Mismos materiales que Classic Stock",
-        "capellada": "Mismos materiales que Classic Stock",
-        "talles": null,
-        "anclaje_mm": null,
+        "suela": "Fibra de carbono (interior tejido biaxial), epoxy vacuum system",
+        "capellada": "Microfibra, acolchados TSPS, refuerzos termoplásticos TG2. Cierre final con hebilla",
+        "talles": { "desde": 30, "hasta": 47 },
+        "anclaje_mm": [
+          { "medida": 165, "talles": "30 al 34.5" },
+          { "medida": 195, "talles": "35 al 47" },
+          { "medida": "165 o 195", "talles": "34 al 36.5" }
+        ],
         "colores": ["Personalizables"]
       },
       "descripcion": "Bota fabricada con los mismos materiales que el modelo Classic Stock, pero con un ajuste personalizado gracias a nuestro sistema de fabricación semi-custom. A través de un formulario que recoge información detallada de los pies (medidas, fotos, calcificaciones óseas, etc.), modificamos la horma estándar para lograr un ajuste personalizado al máximo.",
@@ -174,10 +176,10 @@
       "specs": {
         "suela": "Fibra de carbono, resina epoxy compuesta, laminación en vacío",
         "capellada": "PU, acolchados SPS, refuerzos termoplásticos TG3. Cierre final con hebilla",
-        "talles": { "desde": 30, "hasta": 47 },
+        "talles": { "desde": 30, "hasta": 44 },
         "anclaje_mm": [
           { "medida": 165, "talles": "30 al 34.5" },
-          { "medida": 195, "talles": "35 al 38.5", "nota": "POSIBLE ERRATA: verificar si corresponde '35 al 47' (los talles llegan al 47)" },
+          { "medida": 195, "talles": "35 al 44" },
           { "medida": "165 o 195", "talles": "34 al 36.5" }
         ],
         "colores": ["Negro"]
@@ -208,12 +210,18 @@
           { "medida": 195, "talles": "36 al 38.5" },
           { "medida": "165 o 195", "talles": "del 34 en adelante es posible elegir cualquiera de los dos anclajes" }
         ],
-        "colores": ["Negro/blanco", "Rosa/blanco", "Azul/blanco"]
+        "colores": [
+          "Azules con tapas y talones blancos",
+          "Fucsias con tapas y talones blancos",
+          "Negras con talón blanco",
+          "Negras con tapas y talones azules",
+          "Negras con tapas y talones fucsias"
+        ]
       },
       "descripcion": "Ideal como primera bota profesional de competición. Altura media a alta y excelente soporte de tobillo. Cumple con todas las cualidades técnicas necesarias para desarrollarse en el patín carrera, alta calidad en refuerzos internos.",
       "destacados": [
         "Primera bota profesional de competición",
-        "Tres colorways de fábrica"
+        "Cinco colorways de fábrica"
       ],
       "imagenes": [
         { "archivo": "f4/lateral.jpg", "rol": "principal", "descripcion": "Vista lateral" },

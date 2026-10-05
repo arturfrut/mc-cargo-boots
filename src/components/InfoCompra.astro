@@ -20,22 +20,19 @@ const { sistema } = Astro.props;
   {
     sistema ? (
       <p class="tiempo">
-        <strong>Botas {sistema.nombre}:</strong> {sistema.tiempoEntrega}
+        <strong>{sistema.nombre}:</strong> {sistema.tiempoEntrega}
       </p>
     ) : (
       <ul>
         {SISTEMAS.map((s) => (
           <li>
-            <strong>Botas {s.nombre}:</strong> {s.tiempoEntrega}
+            <strong>{s.nombre}:</strong> {s.tiempoEntrega}
           </li>
         ))}
       </ul>
     )
   }
-  <p class="nota">
-    Como nuestros productos son 100% artesanales, los tiempos de entrega, normalmente, son los estipulados
-    pero son aproximados.
-  </p>
+  <p class="nota">Como nuestros productos son 100% artesanales, los tiempos de entrega son aproximados.</p>
 </aside>
 
 <style>

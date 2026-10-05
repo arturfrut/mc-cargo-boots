@@ -1,7 +1,7 @@
 ---
-// Campo de subida de archivo. ADR 0004: solo UI, la carga no está conectada a
-// ningún backend/storage todavía — el input queda en el DOM (se puede elegir un
-// archivo, queda en el resumen final) pero no se envía a ningún lado.
+// Campo de subida de archivo. ADR 0006: al enviar el formulario, la imagen se
+// comprime en el navegador (src/lib/formularios/comprimir-imagen.ts) y se manda
+// como adjunto por email vía /api/enviar-formulario (Resend).
 interface Props {
   name: string;
   label: string;
@@ -21,8 +21,7 @@ const id = `f-${name}`;
   </label>
   <input id={id} name={name} type="file" accept={accept} required={required} />
   <p class="help">
-    Tamaño máximo sugerido: {maxSizeLabel}. La carga de archivos todavía no está conectada a ningún
-    almacenamiento — por ahora solo queda registrado el nombre del archivo en el resumen final.
+    Tamaño máximo sugerido: {maxSizeLabel}. La foto se comprime automáticamente antes de enviarse.
   </p>
 </div>
 

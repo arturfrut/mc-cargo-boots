@@ -70,6 +70,11 @@ const bordadoHelp =
       ]}
     />
     <InstructionBlock
+      paragraphs={[
+        "Asegúrate de tomar bien la medida del pie de esta manera (Importante: las medidas deben ser exactas, sin agregar ni quitar milímetros).",
+      ]}
+    />
+    <InstructionBlock
       title="Instrumento de medición"
       paragraphs={["Usar regla, cinta métrica o centímetro en la cual comience desde el cero (prestar atención que no esté separado)."]}
       images={[
@@ -90,6 +95,8 @@ const bordadoHelp =
     <TextField name="provincia" label="Provincia / Estado" required />
     <TextField name="pais" label="País" required />
     <TextField name="red_social" label="Red social por donde se contacta y usuario" required />
+    <TextField name="celular_whatsapp" label="Número de celular / WhatsApp" required />
+    <TextField name="email" label="Email" required />
     <RadioGroup name="uso" legend="Uso" options={[{ value: "recreativo", label: "Recreativo/Fitness" }, { value: "competicion", label: "Competición" }]} />
     <NumberField name="anios_patinando" label="Cantidad de años en el patinaje" unit="años" min={0} max={80} />
     <TextField name="bota_en_uso" label="Bota en uso (marca, modelo, de competición o rollers/fitness)" required />
@@ -102,7 +109,7 @@ const bordadoHelp =
     />
     <TextField
       name="datos_extra"
-      label="Datos extras que puedan influir en el calce de la bota (sobrehueso, juanetes, etc.)"
+      label="Datos extras que puedan influir en el calce de la bota (sobrehueso, juanetes, etc.) si es que los hay"
       multiline
     />
 
@@ -206,6 +213,7 @@ const bordadoHelp =
 
   initFormWizard({
     formId: "form-semi-custom",
+    formLabel: "Formulario botas semi-custom",
     steps: ["1", "2"],
     branches: {
       "2": {

@@ -2,7 +2,6 @@
 // docs/specs/005-productos-listado.md — página de un sistema: descripción
 // general + modelos que entran en él.
 import Layout from "../../../layouts/Layout.astro";
-import InfoCompra from "../../../components/InfoCompra.astro";
 import { SISTEMAS, modelosDeSistema } from "../../../lib/sistemas";
 import { whatsappProductHref, whatsappProductMessage } from "../../../lib/constants";
 
@@ -32,7 +31,6 @@ const modelos = modelosDeSistema(sistema);
                 {/* Placeholder: fotos reales pendientes de mc-cargo-imagenes.zip */}
                 <span>Foto pendiente</span>
               </div>
-              <p class="card-gama">{modelo.gama}</p>
               <h2>{modelo.nombre}</h2>
             </a>
           ))
@@ -58,8 +56,6 @@ const modelos = modelosDeSistema(sistema);
           ))
         }
       </div>
-
-      <InfoCompra sistema={sistema} />
 
       <a class="formulario-link" href={sistema.formularioHref}>Completar formulario de medidas</a>
     </div>

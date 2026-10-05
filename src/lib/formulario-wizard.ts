@@ -5,8 +5,13 @@
 // orden lineal de pasos y, en los puntos donde el form original ramifica (elegir modelo →
 // distinta página de colores), qué radio decide el siguiente id de paso.
 //
-// ADR 0004: sin backend en esta versión. "Enviar" arma un resumen a partir de FormData y lo
-// muestra en pantalla — no hay fetch, no persiste nada.
+// ADR 0006 (supersede ADR 0004): "Enviar" comprime las fotos adjuntas, arma un resumen a
+// partir de FormData y lo manda por POST a /api/enviar-formulario (función de Vercel que
+// reenvía todo por email vía Resend). Si el backend todavía no está configurado (faltan env
+// vars — ver .env.example) o si falla la red, no se bloquea al usuario: igual se le muestra
+// el resumen en pantalla como respaldo, con un aviso de que lo guarde/reenvíe a mano.
+
+import { comprimirImagenes, fileToBase64 } from "./formularios/comprimir-imagen";
 
 export type StepId = string;
 
@@ -19,6 +24,8 @@ export interface BranchRule {
 
 export interface WizardConfig {
   formId: string;
+  /** Nombre legible para el asunto del email (ej. "Formulario botas estándar"). */
+  formLabel: string;
   /** Orden lineal de pasos hasta el primer punto de ramificación (inclusive). */
   steps: StepId[];
   /** Reglas de ramificación, indexadas por el StepId que contiene el campo que decide. */
@@ -44,6 +51,8 @@ export function initFormWizard(config: WizardConfig): void {
   const nextBtn = form.querySelector<HTMLButtonElement>("[data-wizard-next]");
   const submitBtn = form.querySelector<HTMLButtonElement>("[data-wizard-submit]");
   const confirmPanel = form.querySelector<HTMLElement>("[data-wizard-confirm]");
+  const confirmTitle = form.querySelector<HTMLElement>("[data-wizard-confirm-title]");
+  const confirmMessage = form.querySelector<HTMLElement>("[data-wizard-confirm-message]");
   const summaryEl = form.querySelector<HTMLElement>("[data-wizard-summary]");
 
   // Historial de navegación real (para que "Atrás" respete las ramas tomadas).
@@ -124,8 +133,7 @@ export function initFormWizard(config: WizardConfig): void {
     }
   }
 
-  function buildSummary(): string {
-    const data = new FormData(form!);
+  function buildSummary(data: FormData): string {
     const lines: string[] = [];
     for (const [key, value] of data.entries()) {
       if (typeof value === "string" && value.trim() !== "") {
@@ -137,19 +145,82 @@ export function initFormWizard(config: WizardConfig): void {
     return lines.join("\n");
   }
 
+  async function enviarPorEmail(data: FormData): Promise<{ ok: boolean; omitidos?: string[] }> {
+    const campos: Record<string, string> = {};
+    const archivosOriginales: File[] = [];
+    for (const [key, value] of data.entries()) {
+      if (typeof value === "string") {
+        if (value.trim() !== "") campos[key] = value;
+      } else if (value instanceof File && value.size > 0) {
+        archivosOriginales.push(value);
+      }
+    }
+
+    const comprimidos = await comprimirImagenes(archivosOriginales);
+    const archivos = await Promise.all(
+      comprimidos.map(async (file) => ({
+        nombre: file.name,
+        tipo: file.type,
+        base64: await fileToBase64(file),
+      })),
+    );
+
+    const res = await fetch("/api/enviar-formulario", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ formulario: config.formLabel, campos, archivos }),
+    });
+
+    if (res.status === 503) {
+      // Backend todavía no configurado (sin RESEND_API_KEY / FORM_DESTINATION_EMAIL) —
+      // no es un error del usuario, no se le muestra como tal.
+      return { ok: false };
+    }
+    if (!res.ok) throw new Error(`enviar-formulario respondió ${res.status}`);
+
+    const body = (await res.json().catch(() => ({}))) as { ok?: boolean; adjuntosOmitidos?: string[] };
+    return { ok: body.ok === true, omitidos: body.adjuntosOmitidos };
+  }
+
   backBtn?.addEventListener("click", goBack);
   nextBtn?.addEventListener("click", goNext);
 
   form.addEventListener("submit", (event) => {
     event.preventDefault();
-    if (summaryEl) summaryEl.textContent = buildSummary();
+
+    const data = new FormData(form!);
+    if (summaryEl) summaryEl.textContent = buildSummary(data);
     confirmPanel?.removeAttribute("hidden");
     for (const el of allSteps) el.hidden = true;
     if (backBtn) backBtn.hidden = true;
     if (nextBtn) nextBtn.hidden = true;
     if (submitBtn) submitBtn.hidden = true;
     if (progressLabel) progressLabel.textContent = "";
+    if (confirmTitle) confirmTitle.textContent = "Enviando...";
+    if (confirmMessage) confirmMessage.textContent = "Estamos comprimiendo y enviando tus datos y fotos.";
     confirmPanel?.scrollIntoView({ behavior: "smooth", block: "start" });
+
+    enviarPorEmail(data)
+      .then((result) => {
+        if (!confirmTitle || !confirmMessage) return;
+        if (result.ok) {
+          confirmTitle.textContent = "¡Listo, lo recibimos!";
+          confirmMessage.textContent =
+            result.omitidos && result.omitidos.length > 0
+              ? `Formulario enviado. Algunas fotos (${result.omitidos.join(", ")}) eran muy pesadas y no se pudieron adjuntar — mandalas por WhatsApp.`
+              : "Formulario enviado por email. Te contactamos a la brevedad.";
+        } else {
+          confirmTitle.textContent = "Formulario listo";
+          confirmMessage.textContent =
+            "El envío automático todavía no está activo — por ahora, guardá o enviá esta captura de pantalla mientras definimos con vos el destino final de los datos.";
+        }
+      })
+      .catch(() => {
+        if (!confirmTitle || !confirmMessage) return;
+        confirmTitle.textContent = "No se pudo enviar automáticamente";
+        confirmMessage.textContent =
+          "Guardá esta captura de pantalla y enviánosla por WhatsApp — hubo un problema de conexión al mandarla sola.";
+      });
   });
 
   render();
